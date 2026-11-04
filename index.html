@@ -219,6 +219,35 @@
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #07040d; }
     ::-webkit-scrollbar-thumb { background: #ff007f; border-radius: 3px; }
+  
+    @keyframes floatPartyUp {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, 0) scale(0.6) rotate(-5deg);
+      }
+      20% {
+        opacity: 1;
+        transform: translate(-50%, -20px) scale(1.05) rotate(2deg);
+      }
+      80% {
+        opacity: 1;
+        transform: translate(-50%, -70px) scale(1) rotate(-2deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -100px) scale(0.8) rotate(5deg);
+      }
+    }
+    .party-floating-text {
+      position: absolute;
+      pointer-events: none;
+      z-index: 40;
+      white-space: nowrap;
+      animation: floatPartyUp 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      font-weight: 900;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+    }
+
   </style>
   <script src="https://www.youtube.com/iframe_api"></script>
 </head>
@@ -414,15 +443,15 @@
           <button
             id="toastCupBtn"
             type="button"
-            class="absolute bottom-14 left-3 sm:left-5 bg-black/85 hover:bg-amber-400 hover:text-black text-amber-300 border-2 border-amber-400 px-3 py-1.5 rounded-xl text-xs font-extrabold shadow-[0_0_20px_rgba(255,215,0,0.7)] transition transform active:scale-95 flex items-center gap-1.5"
+            class="absolute bottom-14 left-3 sm:left-5 bg-black/85 hover:bg-amber-400 hover:text-black text-amber-300 border-2 border-amber-400 px-3.5 py-2 rounded-xl text-xs font-black shadow-[0_0_20px_rgba(255,215,0,0.7)] transition transform active:scale-95 flex items-center gap-1.5"
           >
-            <span>🍺</span> ¡Chocar el Vaso! (<span id="toastCount">0</span>)
+            <span>🥃</span> ¡Servir Piscola!
           </button>
 
           <!-- REALISTIC PISCOLA GLASS (CON MUCHO HIELO) OVER PHOTO -->
-          <div class="absolute bottom-4 right-3 bg-black/90 border-2 border-amber-400/90 rounded-2xl p-2.5 w-28 text-center shadow-[0_0_25px_rgba(0,0,0,0.9)] backdrop-blur-md select-none">
+          <div id="piscolaGlassWidget" class="absolute bottom-4 right-3 bg-black/90 border-2 border-amber-400/90 rounded-2xl p-2.5 w-28 text-center shadow-[0_0_25px_rgba(0,0,0,0.9)] backdrop-blur-md select-none cursor-pointer active:scale-95 transition-transform hover:border-amber-300">
             <div class="text-[9px] font-black uppercase text-amber-300 tracking-wider mb-1 flex items-center justify-center gap-1">
-              <span>🧊</span> <span>Piscola 35°</span>
+              <span>🧊</span> <span>Piscola 40°</span>
             </div>
             
             <!-- Vaso de vidrio con hielos visibles -->
@@ -681,8 +710,8 @@
         type="button"
         class="w-full py-4 px-5 rounded-3xl bg-gradient-to-r from-amber-400 via-fuchsia-500 to-lime-400 text-black font-black text-sm sm:text-base uppercase tracking-wider shadow-[0_0_30px_rgba(255,215,0,0.65)] hover:scale-[1.01] active:scale-[0.99] transition flex items-center justify-center gap-2 border-2 border-white"
       >
-        <span class="text-xl">🍺</span>
-        <span>Jugar Trivia de Admisión (Llena el Vaso)</span>
+        <span class="text-xl">🥃</span>
+        <span>Jugar Trivia de la Cumpleañera</span>
         <span class="text-xl">👑</span>
       </button>
     </section>
@@ -1067,47 +1096,94 @@
     }
 
     // =========================================================================
-    // FOTO INTERACTIVA: VASO QUE SE LLENA Y SE VACÍA CON DELAY
+    // =========================================================================
+    // FOTO INTERACTIVA: VASO DE PISCOLA 40° QUE SE LLENA EN 40 TOQUES Y SE VACÍA CADA 30S
     // =========================================================================
     const toastCupBtn = document.getElementById('toastCupBtn');
-    const toastCountEl = document.getElementById('toastCount');
+    const piscolaGlassWidget = document.getElementById('piscolaGlassWidget');
     const beerMeterFill = document.getElementById('beerMeterFill');
     const beerMeterText = document.getElementById('beerMeterText');
     const laughBadge = document.getElementById('laughBadge');
     const photoStage = document.getElementById('photoStage');
 
-        let drinkLevel = 20;
+    // 15 Frases de Fiesta Chilenas con Emojis
+    const laughPhrases = [
+      '¡SALUD POR LOS 35 DE BÁRBARA! 🥂✨',
+      '¡PISCOLA DE 40° CON BASTANTE HIELO! 🥃🧊',
+      '¡HOY SE BAILA HASTA LAS 03:30 AM! 💃🎉',
+      '¡DEPECHE MODE A TODO VOLUMEN! 🌹🎶',
+      '¡EL LUNES NADIE TRABAJA! 🍾😎',
+      '¡A LAS 22:01 SE CIERRA LA REJA! 🚪⛔',
+      '¡UN BRINDIS POR LA REINA BÁRBARA! 👑💖',
+      '¡EL HIELO NO SE LE NIEGA A NADIE! 🧊🍻',
+      '¡EL MEJOR CARRETE DEL AÑO EN MAIPÚ! 🇨🇱🔥',
+      '¡LA DIGNIDAD SE QUEDA EN LA ENTRADA! 💅😂',
+      '¡OTRA VUELTA DE PISCOLA POR FAVOR! 🥃🤤',
+      '¡CON REGALO O CON VERGÜENZA, PERO LLEGUE! 🎁👀',
+      '¡QUIEN SE QUEDA DORMIDO PAGA LA MULTA! 🚨😴',
+      '¡HOY SE GOZA Y NO SE LLORA! 🥳🥂',
+      '¡QUE VIVAN LOS DESEADOS 35 AÑOS! 🎂👑'
+    ];
+
+    let drinkLevel = 0; // Empieza vacía
     let toastCounter = 0;
     let hasAlertedEbriety = false;
 
     function updateDrinkMeter(pct) {
-      const fill = document.getElementById('beerMeterFill');
-      const text = document.getElementById('beerMeterText');
-      if (!fill || !text) return;
+      if (!beerMeterFill || !beerMeterText) return;
+      beerMeterFill.style.height = pct + '%';
       
-      fill.style.height = pct + '%';
       if (pct >= 100) {
-        text.textContent = '¡100% Cabezona!';
-        text.className = 'text-[10px] font-black text-red-400 animate-pulse mt-1.5';
-      } else if (pct >= 70) {
-        text.textContent = pct + '% Buena Piscola';
-        text.className = 'text-[10px] font-extrabold text-amber-300 mt-1.5';
+        beerMeterText.textContent = '🚨 ¡100% Cabezona!';
+        beerMeterText.className = 'text-[10px] font-black text-red-400 animate-pulse mt-1.5 leading-tight';
+      } else if (pct >= 60) {
+        beerMeterText.textContent = '🥃 Buena Piscola (' + Math.round(pct) + '%)';
+        beerMeterText.className = 'text-[10px] font-extrabold text-amber-300 mt-1.5 leading-tight';
+      } else if (pct > 0) {
+        beerMeterText.textContent = '🥃 Sirviendo... (' + Math.round(pct) + '%)';
+        beerMeterText.className = 'text-[10px] font-extrabold text-lime-300 mt-1.5 leading-tight';
       } else {
-        text.textContent = pct + '% Servida';
-        text.className = 'text-[10px] font-extrabold text-lime-300 mt-1.5';
+        beerMeterText.textContent = '🥃 Vaso Vacío';
+        beerMeterText.className = 'text-[10px] font-semibold text-stone-400 mt-1.5 leading-tight';
       }
     }
 
-    // Vaciar el vaso lentamente con delay (cada 2.5s baja un 3%)
+    // Cada 30 segundos va perdiendo un porcentaje de vaciado (-10%)
     setInterval(() => {
-      if (drinkLevel > 15) {
-        drinkLevel = Math.max(15, drinkLevel - 3);
+      if (drinkLevel > 0) {
+        drinkLevel = Math.max(0, drinkLevel - 10);
         updateDrinkMeter(drinkLevel);
-        if (drinkLevel < 85) {
-          hasAlertedEbriety = false;
+        if (drinkLevel < 90) {
+          hasAlertedEbriety = false; // Reset de la alerta si baja el nivel
         }
       }
-    }, 2500);
+    }, 30000);
+
+    // Muestra frases flotantes animadas directamente sobre la foto
+    function spawnFloatingPartyText(phrase, x, y) {
+      if (!photoStage) return;
+      const el = document.createElement('div');
+      el.className = 'party-floating-text bg-black/90 text-amber-300 border border-amber-400/80 px-3 py-1 rounded-full text-xs shadow-2xl';
+      el.textContent = phrase;
+      
+      // Coordenadas relativas
+      const rect = photoStage.getBoundingClientRect();
+      let left = (rect.width / 2);
+      let top = (rect.height * 0.45);
+      
+      if (x && y) {
+        left = Math.min(Math.max(x - rect.left, 60), rect.width - 60);
+        top = Math.min(Math.max(y - rect.top, 80), rect.height - 80);
+      }
+      
+      el.style.left = left + 'px';
+      el.style.top = top + 'px';
+      
+      photoStage.appendChild(el);
+      setTimeout(() => {
+        if (el.parentNode) el.parentNode.removeChild(el);
+      }, 1800);
+    }
 
     function triggerPhotoToast(e) {
       if (e) {
@@ -1115,24 +1191,43 @@
         e.stopPropagation();
       }
       toastCounter++;
-      const toastCountEl = document.getElementById('toastCount');
-      if (toastCountEl) toastCountEl.textContent = toastCounter;
       playClinkSound();
       spawnCupBubbles(6);
 
-      // Llena el vaso progresivamente (+6% por toque)
-      drinkLevel = Math.min(100, drinkLevel + 6);
+      // Se llena en exactamente 40 toques (+2.5% por cada toque)
+      drinkLevel = Math.min(100, drinkLevel + 2.5);
       updateDrinkMeter(drinkLevel);
 
+      const phrase = laughPhrases[toastCounter % laughPhrases.length];
+
+      // Frase flotante interactiva
+      let clientX = null;
+      let clientY = null;
+      if (e) {
+        if (e.touches && e.touches[0]) {
+          clientX = e.touches[0].clientX;
+          clientY = e.touches[0].clientY;
+        } else if (e.clientX) {
+          clientX = e.clientX;
+          clientY = e.clientY;
+        }
+      }
+      spawnFloatingPartyText(phrase, clientX, clientY);
+
+      // Si se llena al 100%, enviar mensaje de cuidado
       if (drinkLevel >= 100 && !hasAlertedEbriety) {
         hasAlertedEbriety = true;
-        showToast('🚨 ¡Cuidado! Vas camino a ponerte ebrio/a antes de las 22:00 hrs 🍷😵');
+        showToast('🚨 ¡CUIDADO! Te tomaste la piscola entera de 40° y vas a ponerte ebrio/a antes de las 22:00 hrs 🍷😵');
       }
 
-      const laughBadge = document.getElementById('laughBadge');
+      // Actualizar también el badge fijo con rebote
       if (laughBadge) {
         laughBadge.classList.remove('hidden');
-        laughBadge.textContent = laughPhrases[toastCounter % laughPhrases.length];
+        laughBadge.textContent = phrase;
+        laughBadge.style.transform = 'scale(1.15)';
+        setTimeout(() => {
+          laughBadge.style.transform = 'scale(1)';
+        }, 180);
       }
     }
 
@@ -1140,11 +1235,55 @@
       toastCupBtn.addEventListener('click', triggerPhotoToast);
       toastCupBtn.addEventListener('touchend', triggerPhotoToast);
     }
+    if (piscolaGlassWidget) {
+      piscolaGlassWidget.addEventListener('click', triggerPhotoToast);
+      piscolaGlassWidget.addEventListener('touchend', triggerPhotoToast);
+    }
     if (photoStage) {
       photoStage.addEventListener('click', triggerPhotoToast);
     }
 
+    // Inicializar vaso
+    updateDrinkMeter(drinkLevel);
+
     // =========================================================================
+    // ACTO III: POLÍTICA INTERACTIVA DE REGALOS Y CESANTÍA
+    // =========================================================================
+    const giftBtnEmployed = document.getElementById('giftBtnEmployed');
+    const giftBtnUnemployed = document.getElementById('giftBtnUnemployed');
+    const giftStatusFeedback = document.getElementById('giftStatusFeedback');
+
+    let giftStatus = 'employed'; // 'employed' o 'unemployed'
+
+    function setGiftStatus(status) {
+      giftStatus = status;
+      if (!giftBtnEmployed || !giftBtnUnemployed || !giftStatusFeedback) return;
+      
+      if (status === 'employed') {
+        giftBtnEmployed.className = 'bg-amber-400 text-black font-black text-xs py-2.5 px-3 rounded-lg shadow-lg border-2 border-amber-200 transition flex items-center justify-center gap-1.5 ring-2 ring-amber-300';
+        giftBtnUnemployed.className = 'bg-stone-900 text-stone-400 border border-stone-700 font-bold text-xs py-2.5 px-3 rounded-lg hover:bg-stone-800 transition flex items-center justify-center gap-1.5';
+        giftStatusFeedback.textContent = '👑 ¡Excelente decisión! Tu regalo asegura el cariño de la anfitriona y pase preferencial a la barra.';
+        giftStatusFeedback.className = 'text-xs text-lime-300 font-bold mt-2.5 text-center bg-black/60 p-2.5 rounded-lg border border-lime-400/30';
+        showToast('🎁 ¡Regalo confirmado! Bárbara te recibirá con un brindis.');
+      } else {
+        giftBtnUnemployed.className = 'bg-red-600 text-white font-black text-xs py-2.5 px-3 rounded-lg shadow-lg border-2 border-red-300 transition flex items-center justify-center gap-1.5 ring-2 ring-red-400';
+        giftBtnEmployed.className = 'bg-stone-900 text-stone-400 border border-stone-700 font-bold text-xs py-2.5 px-3 rounded-lg hover:bg-stone-800 transition flex items-center justify-center gap-1.5';
+        giftStatusFeedback.textContent = '📄 Exención concedida por cesantía. Advertencia: Se fiscalizará certificado de finiquito o cartola en la puerta.';
+        giftStatusFeedback.className = 'text-xs text-amber-300 font-bold mt-2.5 text-center bg-black/60 p-2.5 rounded-lg border border-amber-400/30';
+        showToast('😅 Exento por cesantía: ¡A darlo todo en la pista de baile!');
+      }
+      playClinkSound();
+    }
+
+    if (giftBtnEmployed) {
+      giftBtnEmployed.addEventListener('click', (e) => { e.preventDefault(); setGiftStatus('employed'); });
+      giftBtnEmployed.addEventListener('touchend', (e) => { e.preventDefault(); setGiftStatus('employed'); });
+    }
+    if (giftBtnUnemployed) {
+      giftBtnUnemployed.addEventListener('click', (e) => { e.preventDefault(); setGiftStatus('unemployed'); });
+      giftBtnUnemployed.addEventListener('touchend', (e) => { e.preventDefault(); setGiftStatus('unemployed'); });
+    }
+
     // WHATSAPP DIRECTO A BÁRBARA (+56975177840)
     // =========================================================================
     const punctualityToggle = document.getElementById('punctualityToggle');
@@ -1178,9 +1317,13 @@
 
     rsvpWhatsappBtn.addEventListener('click', () => {
       const hasWonCoupon = localStorage.getItem('barbaraTriviaScore') === '4';
-      let msg = '¡Hola Bárbara! 👑 Confirmo mi asistencia a tus deseados 35 años este viernes 27 de noviembre en Nueva Antumalal 146, Maipú. ¡Llegaré puntual entre las 20:00 y 22:00 hrs para celebrar con todo! 🥂🎉';
-      if (hasWonCoupon) {
-        msg = '¡Hola Bárbara! 👑 Confirmo mi asistencia a tus deseados 35 años este viernes 27 de noviembre en Nueva Antumalal 146. Además, ¡saqué 4/4 en la trivia y tengo mi cupón listo para cobrar mi premio sorpresa en la barra! 🎟️🍾🥂';
+      let msg = '';
+      if (giftStatus === 'unemployed') {
+        msg = '¡Hola Bárbara! 👑 Confirmo mi asistencia a tus 35 años este viernes 27 de noviembre en Nueva Antumalal 146. Aviso formalmente que estoy sin trabajo (exento de regalo) pero llego con toda la energía a bailar y celebrar con todo 💃🍾';
+      } else if (hasWonCoupon) {
+        msg = '¡Hola Bárbara! 👑 Confirmo mi asistencia a tus 35 años este viernes 27 de noviembre en Nueva Antumalal 146 con regalo en mano. Además, ¡saqué 4/4 en la trivia y tengo mi cupón listo para cobrar mi premio sorpresa en la barra! 🎟️🍾🥂';
+      } else {
+        msg = '¡Hola Bárbara! 👑 Confirmo mi asistencia a tus deseados 35 años este viernes 27 de noviembre en Nueva Antumalal 146, Maipú. ¡Llegaré puntual entre las 20:00 y 22:00 hrs con regalo para celebrar con todo! 🥂🎉';
       }
       window.open(`https://wa.me/56975177840?text=${encodeURIComponent(msg)}`, '_blank');
     });
