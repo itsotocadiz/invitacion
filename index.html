@@ -263,7 +263,14 @@
   </div>
 
       <!-- HIDDEN YOUTUBE AUDIO PLAYER (Enjoy The Silence) -->
-  <div id="ytAudioPlayer" class="fixed -top-[9999px] -left-[9999px] w-1 h-1 opacity-0 pointer-events-none overflow-hidden" aria-hidden="true"></div>
+  <iframe
+    id="ytAudioPlayer"
+    src="https://www.youtube.com/embed/aGSKrC7dGcY?enablejsapi=1&autoplay=1&mute=0&loop=1&playlist=aGSKrC7dGcY&playsinline=1"
+    allow="autoplay; encrypted-media"
+    class="fixed -top-20 -left-20 w-4 h-4 opacity-0 pointer-events-none"
+    aria-hidden="true"
+    tabindex="-1"
+  ></iframe>
 
   <!-- DISCREET FLOATING AUDIO CONTROLLER IN BOTTOM-RIGHT -->
   <div id="musicPill" class="fixed bottom-4 right-4 z-40 flex items-center gap-2.5 bg-black/90 backdrop-blur-md border border-amber-400/50 text-stone-200 px-3.5 py-1.5 rounded-full shadow-[0_4px_25px_rgba(0,0,0,0.85)] text-xs font-sans-detail">
@@ -431,27 +438,53 @@
           <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/35 pointer-events-none"></div>
           <div class="absolute inset-0 bg-radial from-transparent via-transparent to-black/50 pointer-events-none"></div>
 
-          <!-- COMIC LUXURY LAUGH EFFECT NEAR HER FACE -->
-          <div id="laughBadge" class="laugh-badge hidden absolute top-[34%] right-3 sm:right-5 bg-gradient-to-r from-amber-300 to-yellow-500 text-black font-black text-xs sm:text-sm px-3 py-1 rounded-full border-2 border-black shadow-[0_0_20px_rgba(255,215,0,0.9)]">
-            ¡JAJAJA! 🥂✨
+          <!-- PROMINENT FESTIVE PHRASE BANNER OVER PHOTO -->
+          <div id="laughBadge" class="absolute top-3 inset-x-3 sm:inset-x-5 z-30 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 text-black font-black text-xs sm:text-sm py-2 px-3 rounded-2xl border-2 border-black shadow-[0_4px_25px_rgba(255,215,0,0.95)] text-center transition-all transform duration-200 flex items-center justify-center gap-1.5">
+            <span>🎉</span> <span id="laughBadgeText">¡Toca "Servir Piscola" para celebrar los 35!</span> <span>🥂</span>
           </div>
 
-          <!-- BUBBLES CONTAINER OVER THE BEER CUP (Bottom-left of photo) -->
-          <div id="cupBubbleZone" class="absolute bottom-24 left-12 w-24 h-44 pointer-events-none"></div>
+          <!-- BUBBLES CONTAINER OVER THE BEER CUP -->
+          <div id="cupBubbleZone" class="absolute bottom-24 left-12 w-24 h-44 pointer-events-none z-20"></div>
 
-          <!-- INTERACTIVE TAP TARGET ON THE CUP -->
+          <!-- BOTÓN INTERACTIVO: SERVIR PISCOLA CON VASO Y BARRA DE PORCENTAJE -->
           <button
             id="toastCupBtn"
             type="button"
-            class="absolute bottom-14 left-3 sm:left-5 bg-black/85 hover:bg-amber-400 hover:text-black text-amber-300 border-2 border-amber-400 px-3.5 py-2 rounded-xl text-xs font-black shadow-[0_0_20px_rgba(255,215,0,0.7)] transition transform active:scale-95 flex items-center gap-1.5"
+            class="absolute bottom-3 left-2.5 sm:left-4 bg-gradient-to-br from-stone-950 via-black to-stone-900 border-2 border-amber-400 p-2 sm:p-2.5 rounded-2xl shadow-[0_0_25px_rgba(255,215,0,0.85)] active:scale-95 transition-all text-left flex flex-col gap-1.5 z-30 max-w-[170px] sm:max-w-[190px]"
           >
-            <span>🥃</span> ¡Servir Piscola!
+            <div class="flex items-center gap-2">
+              <!-- Vaso de Piscola animado en el botón -->
+              <div class="relative w-7 h-9 border border-amber-300 rounded-b-md bg-stone-900 overflow-hidden shrink-0 flex flex-col justify-end shadow-inner">
+                <span class="absolute top-0.5 inset-x-0 text-[8px] text-center pointer-events-none">🧊</span>
+                <div id="btnCupFill" class="w-full bg-gradient-to-t from-[#150502] via-[#2f0e04] to-[#591b07] border-t border-amber-400 transition-all duration-300" style="height: 0%;"></div>
+              </div>
+              <div>
+                <div class="text-[11px] sm:text-xs font-black uppercase text-amber-300 tracking-wide flex items-center gap-1">
+                  <span>🥃</span> ¡Servir Piscola!
+                </div>
+                <div class="text-[8px] sm:text-[9px] text-stone-300 font-semibold leading-tight">
+                  Toca para llenar (40 toques)
+                </div>
+              </div>
+            </div>
+            
+            <!-- Barra de Porcentaje en el botón -->
+            <div class="w-full bg-stone-950 rounded-full h-2 p-0.5 border border-amber-400/50 overflow-hidden relative">
+              <div id="btnProgressBar" class="h-full bg-gradient-to-r from-amber-500 via-yellow-400 to-lime-400 rounded-full transition-all duration-200" style="width: 0%;"></div>
+            </div>
+            <div class="flex justify-between items-center text-[8.5px] font-black tracking-tight">
+              <span class="text-stone-400">Progreso:</span>
+              <span id="btnPercentLabel" class="text-lime-400 font-extrabold text-[9.5px]">0%</span>
+            </div>
           </button>
 
-          <!-- REALISTIC PISCOLA GLASS (CON MUCHO HIELO) OVER PHOTO -->
-          <div id="piscolaGlassWidget" class="absolute bottom-4 right-3 bg-black/90 border-2 border-amber-400/90 rounded-2xl p-2.5 w-28 text-center shadow-[0_0_25px_rgba(0,0,0,0.9)] backdrop-blur-md select-none cursor-pointer active:scale-95 transition-transform hover:border-amber-300">
-            <div class="text-[9px] font-black uppercase text-amber-300 tracking-wider mb-1 flex items-center justify-center gap-1">
-              <span>🧊</span> <span>Piscola 40°</span>
+          <!-- EL PISCOLÓMETRO: REFLEJA LOS TOQUES DEL OTRO LADO -->
+          <div id="piscolaGlassWidget" class="absolute bottom-3 right-2.5 sm:right-4 bg-black/90 border-2 border-amber-400/90 rounded-2xl p-2 sm:p-2.5 w-28 sm:w-32 text-center shadow-[0_0_25px_rgba(0,0,0,0.9)] backdrop-blur-md select-none z-30">
+            <div class="text-[9px] font-black uppercase text-amber-300 tracking-wider mb-0.5 flex items-center justify-center gap-1">
+              <span>🥃</span> <span>El Piscolómetro</span>
+            </div>
+            <div class="text-[8px] font-bold text-lime-400 uppercase tracking-widest mb-1">
+              40° • (Refleja toques)
             </div>
             
             <!-- Vaso de vidrio con hielos visibles -->
@@ -469,19 +502,17 @@
               </div>
 
               <!-- Líquido Oscuro de Piscola (Coca Cola + Pisco) -->
-              <div id="beerMeterFill" class="w-full bg-gradient-to-t from-[#100401] via-[#240a02] to-[#451404] transition-all duration-300 relative border-t border-amber-400/40" style="height: 20%;">
-                <!-- Reflejo ámbar -->
+              <div id="beerMeterFill" class="w-full bg-gradient-to-t from-[#100401] via-[#240a02] to-[#451404] transition-all duration-300 relative border-t border-amber-400/40" style="height: 0%;">
                 <div class="absolute inset-x-0 top-0 h-1 bg-amber-400/50"></div>
               </div>
             </div>
 
-            <div id="beerMeterText" class="text-[10px] font-extrabold text-lime-300 mt-1.5 leading-tight">
-              20% Servida
-            </div>
-            <div class="text-[8px] text-stone-400 uppercase tracking-tighter mt-0.5">
-              (Toca para servir)
+            <div id="beerMeterText" class="text-[10px] font-extrabold text-stone-400 mt-1.5 leading-tight">
+              0% Vacío
             </div>
           </div>
+        </div>
+      </div>
     </section>
 
     <!-- LIVE COUNTDOWN TO FRIDAY NOV 27, 20:00 HRS -->
@@ -978,67 +1009,110 @@
     // =========================================================================
     let ytPlayer = null;
     let isMusicPlaying = false;
+    let hasAttemptedAutoMusic = false;
 
-    window.onYouTubeIframeAPIReady = function() {
-      ytPlayer = new YT.Player('ytAudioPlayer', {
-        height: '1',
-        width: '1',
-        videoId: 'aGSKrC7dGcY',
-        playerVars: {
-          autoplay: 0,
-          controls: 0,
-          loop: 1,
-          playlist: 'aGSKrC7dGcY',
-          playsinline: 1,
-          enablejsapi: 1
-        },
-        events: {
-          'onReady': onPlayerReady,
-          'onStateChange': onPlayerStateChange
+    function playMusicNow() {
+      isMusicPlaying = true;
+      hasAttemptedAutoMusic = true;
+
+      // 1. Mensaje directo postMessage al iframe (funciona sincrónicamente en el click del usuario)
+      const ytIframe = document.getElementById('ytAudioPlayer');
+      if (ytIframe && ytIframe.contentWindow) {
+        try {
+          ytIframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+          ytIframe.contentWindow.postMessage('{"event":"command","func":"setVolume","args":[100]}', '*');
+          ytIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        } catch (e) {
+          console.warn('postMessage play error:', e);
         }
-      });
-    };
-
-    function onPlayerReady(event) {
-      if (soundEnabled && isMusicPlaying) {
-        event.target.playVideo();
       }
+
+      // 2. Mediante API YT si ya está instanciada
+      if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+        try {
+          ytPlayer.unMute();
+          ytPlayer.setVolume(100);
+          ytPlayer.playVideo();
+        } catch (e) {
+          console.warn('ytPlayer.playVideo error:', e);
+        }
+      }
+
+      updateMusicPillUI(true);
     }
 
-    function onPlayerStateChange(event) {
+    function pauseMusicNow() {
+      isMusicPlaying = false;
+      const ytIframe = document.getElementById('ytAudioPlayer');
+      if (ytIframe && ytIframe.contentWindow) {
+        try {
+          ytIframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+        } catch (e) {}
+      }
+      if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+        try {
+          ytPlayer.pauseVideo();
+        } catch (e) {}
+      }
+      updateMusicPillUI(false);
+    }
+
+    function updateMusicPillUI(playing) {
       const musicPlayIcon = document.getElementById('musicPlayIcon');
       const musicPauseIcon = document.getElementById('musicPauseIcon');
       const musicPulseDot = document.getElementById('musicPulseDot');
-      if (event.data === YT.PlayerState.PLAYING) {
-        isMusicPlaying = true;
+      if (playing) {
         if (musicPlayIcon) musicPlayIcon.classList.add('hidden');
         if (musicPauseIcon) musicPauseIcon.classList.remove('hidden');
         if (musicPulseDot) musicPulseDot.className = 'w-2 h-2 rounded-full bg-red-600 animate-pulse';
       } else {
-        isMusicPlaying = false;
         if (musicPlayIcon) musicPlayIcon.classList.remove('hidden');
         if (musicPauseIcon) musicPauseIcon.classList.add('hidden');
         if (musicPulseDot) musicPulseDot.className = 'w-2 h-2 rounded-full bg-stone-500';
       }
     }
 
+    window.onYouTubeIframeAPIReady = function() {
+      ytPlayer = new YT.Player('ytAudioPlayer', {
+        events: {
+          'onReady': function(event) {
+            if (isMusicPlaying) {
+              event.target.unMute();
+              event.target.setVolume(100);
+              event.target.playVideo();
+            }
+          },
+          'onStateChange': function(event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+              isMusicPlaying = true;
+              updateMusicPillUI(true);
+            } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+              isMusicPlaying = false;
+              updateMusicPillUI(false);
+            }
+          }
+        }
+      });
+    };
+
     function toggleMusicPlayback() {
-      if (!ytPlayer || typeof ytPlayer.getPlayerState !== 'function') return;
-      const state = ytPlayer.getPlayerState();
-      if (state === YT.PlayerState.PLAYING) {
-        ytPlayer.pauseVideo();
+      if (isMusicPlaying) {
+        pauseMusicNow();
       } else {
-        ytPlayer.playVideo();
+        playMusicNow();
       }
     }
 
     const musicToggleBtn = document.getElementById('musicToggleBtn');
     if (musicToggleBtn) {
-      musicToggleBtn.addEventListener('click', toggleMusicPlayback);
+      musicToggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMusicPlayback();
+      });
     }
 
     // =========================================================================
-    // PROTOCOLO DE APERTURA (ROMPE EL SELLO & INICIA MÚSICA)
+    // PROTOCOLO DE APERTURA (ROMPE EL SELLO & INICIA MÚSICA AUTOMÁTICAMENTE)
     // =========================================================================
     const operaOverlay = document.getElementById('operaOverlay');
     const parchmentLeft = document.getElementById('parchmentLeft');
@@ -1052,6 +1126,9 @@
       if (hasInvitationOpened) return;
       hasInvitationOpened = true;
 
+      // Iniciar música automáticamente con el toque del sello
+      playMusicNow();
+
       // Animación de rasgado inmediata
       if (operaCardContent) {
         operaCardContent.style.transform = 'scale(1.12) rotate(-3deg)';
@@ -1060,22 +1137,9 @@
       if (parchmentLeft) parchmentLeft.classList.add('torn-left');
       if (parchmentRight) parchmentRight.classList.add('torn-right');
 
-      // Reproducción de audio protegida (no puede trabar la animación si falla)
       try {
         playOperaTearSound();
-      } catch (err) {
-        console.warn('Audio error:', err);
-      }
-
-      // YouTube protegido (no puede trabar si la API aún está cargando)
-      try {
-        if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
-          ytPlayer.playVideo();
-          isMusicPlaying = true;
-        }
-      } catch (err) {
-        console.warn('YouTube play error:', err);
-      }
+      } catch (err) {}
 
       // Ocultar definitivamente el pergamino
       setTimeout(() => {
@@ -1083,7 +1147,7 @@
           operaOverlay.style.display = 'none';
           operaOverlay.classList.add('hidden');
         }
-        showToast('🌹 ¡Bienvenido a los 35 de Bárbara! (Depeche Mode Edition)');
+        showToast('🌹 ¡Disfruta la fiesta con Depeche Mode de fondo! 🎶');
       }, 700);
     }
 
@@ -1095,15 +1159,29 @@
       });
     }
 
+    // Respaldo: si el usuario toca cualquier parte del pergamino, abre y suena la música
+    if (operaOverlay) {
+      operaOverlay.addEventListener('click', (e) => {
+        if (!hasInvitationOpened && e.target !== tearSealBtn) {
+          tearInvitationOpen();
+        }
+      });
+    }
+
     // =========================================================================
-    // =========================================================================
-    // FOTO INTERACTIVA: VASO DE PISCOLA 40° QUE SE LLENA EN 40 TOQUES Y SE VACÍA CADA 30S
+    // FOTO INTERACTIVA: BOTÓN SERVIR PISCOLA + EL PISCOLÓMETRO + 15 FRASES
     // =========================================================================
     const toastCupBtn = document.getElementById('toastCupBtn');
+    const btnCupFill = document.getElementById('btnCupFill');
+    const btnProgressBar = document.getElementById('btnProgressBar');
+    const btnPercentLabel = document.getElementById('btnPercentLabel');
+
     const piscolaGlassWidget = document.getElementById('piscolaGlassWidget');
     const beerMeterFill = document.getElementById('beerMeterFill');
     const beerMeterText = document.getElementById('beerMeterText');
+
     const laughBadge = document.getElementById('laughBadge');
+    const laughBadgeText = document.getElementById('laughBadgeText');
     const photoStage = document.getElementById('photoStage');
 
     // 15 Frases de Fiesta Chilenas con Emojis
@@ -1125,63 +1203,66 @@
       '¡QUE VIVAN LOS DESEADOS 35 AÑOS! 🎂👑'
     ];
 
-    let drinkLevel = 0; // Empieza vacía
+    let drinkLevel = 0; // Inicia vacía
     let toastCounter = 0;
     let hasAlertedEbriety = false;
 
     function updateDrinkMeter(pct) {
-      if (!beerMeterFill || !beerMeterText) return;
-      beerMeterFill.style.height = pct + '%';
-      
-      if (pct >= 100) {
-        beerMeterText.textContent = '🚨 ¡100% Cabezona!';
-        beerMeterText.className = 'text-[10px] font-black text-red-400 animate-pulse mt-1.5 leading-tight';
-      } else if (pct >= 60) {
-        beerMeterText.textContent = '🥃 Buena Piscola (' + Math.round(pct) + '%)';
-        beerMeterText.className = 'text-[10px] font-extrabold text-amber-300 mt-1.5 leading-tight';
-      } else if (pct > 0) {
-        beerMeterText.textContent = '🥃 Sirviendo... (' + Math.round(pct) + '%)';
-        beerMeterText.className = 'text-[10px] font-extrabold text-lime-300 mt-1.5 leading-tight';
-      } else {
-        beerMeterText.textContent = '🥃 Vaso Vacío';
-        beerMeterText.className = 'text-[10px] font-semibold text-stone-400 mt-1.5 leading-tight';
+      // 1. Actualizar barra y vaso del botón "Servir Piscola"
+      if (btnCupFill) btnCupFill.style.height = pct + '%';
+      if (btnProgressBar) btnProgressBar.style.width = pct + '%';
+      if (btnPercentLabel) {
+        btnPercentLabel.textContent = Math.round(pct) + '%';
+        if (pct >= 100) {
+          btnPercentLabel.className = 'text-red-400 font-black text-[9.5px] animate-pulse';
+        } else if (pct >= 60) {
+          btnPercentLabel.className = 'text-amber-300 font-black text-[9.5px]';
+        } else {
+          btnPercentLabel.className = 'text-lime-400 font-extrabold text-[9.5px]';
+        }
+      }
+
+      // 2. Actualizar "El Piscolómetro" en el otro lado
+      if (beerMeterFill) beerMeterFill.style.height = pct + '%';
+      if (beerMeterText) {
+        if (pct >= 100) {
+          beerMeterText.textContent = '🚨 ¡100% Cabezona!';
+          beerMeterText.className = 'text-[10px] font-black text-red-400 animate-pulse mt-1.5 leading-tight';
+        } else if (pct >= 60) {
+          beerMeterText.textContent = '🥃 ' + Math.round(pct) + '% Fuerte';
+          beerMeterText.className = 'text-[10px] font-extrabold text-amber-300 mt-1.5 leading-tight';
+        } else if (pct > 0) {
+          beerMeterText.textContent = '🥃 ' + Math.round(pct) + '% Servida';
+          beerMeterText.className = 'text-[10px] font-extrabold text-lime-300 mt-1.5 leading-tight';
+        } else {
+          beerMeterText.textContent = '🥃 0% Vacío';
+          beerMeterText.className = 'text-[10px] font-semibold text-stone-400 mt-1.5 leading-tight';
+        }
       }
     }
 
-    // Cada 30 segundos va perdiendo un porcentaje de vaciado (-10%)
+    // Cada 30 segundos el Piscolómetro va perdiendo un porcentaje (-10%)
     setInterval(() => {
       if (drinkLevel > 0) {
         drinkLevel = Math.max(0, drinkLevel - 10);
         updateDrinkMeter(drinkLevel);
         if (drinkLevel < 90) {
-          hasAlertedEbriety = false; // Reset de la alerta si baja el nivel
+          hasAlertedEbriety = false;
         }
       }
     }, 30000);
 
-    // Muestra frases flotantes animadas directamente sobre la foto
-    function spawnFloatingPartyText(phrase, x, y) {
+    // Muestra frases flotantes sobre la foto
+    function spawnFloatingPartyBubble(phrase) {
       if (!photoStage) return;
-      const el = document.createElement('div');
-      el.className = 'party-floating-text bg-black/90 text-amber-300 border border-amber-400/80 px-3 py-1 rounded-full text-xs shadow-2xl';
-      el.textContent = phrase;
-      
-      // Coordenadas relativas
-      const rect = photoStage.getBoundingClientRect();
-      let left = (rect.width / 2);
-      let top = (rect.height * 0.45);
-      
-      if (x && y) {
-        left = Math.min(Math.max(x - rect.left, 60), rect.width - 60);
-        top = Math.min(Math.max(y - rect.top, 80), rect.height - 80);
-      }
-      
-      el.style.left = left + 'px';
-      el.style.top = top + 'px';
-      
-      photoStage.appendChild(el);
+      const bubble = document.createElement('div');
+      bubble.className = 'party-floating-text bg-gradient-to-r from-yellow-400 to-amber-500 text-black border-2 border-black px-3.5 py-1.5 rounded-full text-xs font-black shadow-[0_4px_20px_rgba(0,0,0,0.85)]';
+      bubble.textContent = phrase;
+      bubble.style.left = '50%';
+      bubble.style.top = '48%';
+      photoStage.appendChild(bubble);
       setTimeout(() => {
-        if (el.parentNode) el.parentNode.removeChild(el);
+        if (bubble.parentNode) bubble.parentNode.removeChild(bubble);
       }, 1800);
     }
 
@@ -1194,56 +1275,48 @@
       playClinkSound();
       spawnCupBubbles(6);
 
-      // Se llena en exactamente 40 toques (+2.5% por cada toque)
+      // Se llena en 40 toques (+2.5% por cada toque)
       drinkLevel = Math.min(100, drinkLevel + 2.5);
       updateDrinkMeter(drinkLevel);
 
+      // Obtener la frase festiva
       const phrase = laughPhrases[toastCounter % laughPhrases.length];
 
-      // Frase flotante interactiva
-      let clientX = null;
-      let clientY = null;
-      if (e) {
-        if (e.touches && e.touches[0]) {
-          clientX = e.touches[0].clientX;
-          clientY = e.touches[0].clientY;
-        } else if (e.clientX) {
-          clientX = e.clientX;
-          clientY = e.clientY;
+      // 1. Mostrar de inmediato en el banner superior de la foto con animación
+      if (laughBadge) {
+        if (laughBadgeText) {
+          laughBadgeText.textContent = phrase;
+        } else {
+          laughBadge.textContent = phrase;
         }
+        laughBadge.style.transform = 'scale(1.1) rotate(' + (toastCounter % 2 === 0 ? '2deg' : '-2deg') + ')';
+        setTimeout(() => {
+          laughBadge.style.transform = 'scale(1) rotate(0deg)';
+        }, 220);
       }
-      spawnFloatingPartyText(phrase, clientX, clientY);
 
-      // Si se llena al 100%, enviar mensaje de cuidado
+      // 2. Generar burbuja flotante sobre la foto
+      spawnFloatingPartyBubble(phrase);
+
+      // 3. Alerta si llega al 100%
       if (drinkLevel >= 100 && !hasAlertedEbriety) {
         hasAlertedEbriety = true;
         showToast('🚨 ¡CUIDADO! Te tomaste la piscola entera de 40° y vas a ponerte ebrio/a antes de las 22:00 hrs 🍷😵');
       }
-
-      // Actualizar también el badge fijo con rebote
-      if (laughBadge) {
-        laughBadge.classList.remove('hidden');
-        laughBadge.textContent = phrase;
-        laughBadge.style.transform = 'scale(1.15)';
-        setTimeout(() => {
-          laughBadge.style.transform = 'scale(1)';
-        }, 180);
-      }
     }
 
+    // Asignar eventos: El botón de servir es el que ejecuta la acción
     if (toastCupBtn) {
       toastCupBtn.addEventListener('click', triggerPhotoToast);
       toastCupBtn.addEventListener('touchend', triggerPhotoToast);
     }
+    // El Piscolómetro refleja los toques, pero si lo presionan también suma
     if (piscolaGlassWidget) {
       piscolaGlassWidget.addEventListener('click', triggerPhotoToast);
       piscolaGlassWidget.addEventListener('touchend', triggerPhotoToast);
     }
-    if (photoStage) {
-      photoStage.addEventListener('click', triggerPhotoToast);
-    }
 
-    // Inicializar vaso
+    // Inicializar vaso y barra
     updateDrinkMeter(drinkLevel);
 
     // =========================================================================
