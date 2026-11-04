@@ -220,6 +220,7 @@
     ::-webkit-scrollbar-track { background: #07040d; }
     ::-webkit-scrollbar-thumb { background: #ff007f; border-radius: 3px; }
   </style>
+  <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body class="maximalist-bg min-h-screen relative">
 
@@ -240,7 +241,20 @@
     </div>
   </div>
 
-    <!-- ===================================================================== -->
+      <!-- HIDDEN YOUTUBE AUDIO PLAYER (Enjoy The Silence) -->
+  <div id="ytAudioPlayer" class="hidden pointer-events-none"></div>
+
+  <!-- DISCREET FLOATING AUDIO CONTROLLER IN BOTTOM-RIGHT -->
+  <div id="musicPill" class="fixed bottom-4 right-4 z-40 flex items-center gap-2.5 bg-black/90 backdrop-blur-md border border-amber-400/50 text-stone-200 px-3.5 py-1.5 rounded-full shadow-[0_4px_25px_rgba(0,0,0,0.85)] text-xs font-sans-detail">
+    <span id="musicPulseDot" class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+    <span class="text-[11px] font-semibold text-amber-200 truncate max-w-[130px] sm:max-w-[200px]">Depeche Mode • Enjoy the Silence</span>
+    <button id="musicToggleBtn" type="button" class="text-amber-300 hover:text-white p-1 focus:outline-none flex items-center transition" aria-label="Reproducir o Pausar Música">
+      <span id="musicPlayIcon" class="hidden text-sm">▶</span>
+      <span id="musicPauseIcon" class="text-sm">⏸</span>
+    </button>
+  </div>
+
+  <!-- ===================================================================== -->
   <!-- FASE 1: PERGAMINO SOLEMNE DE ÓPERA REAL (ALTA GALA EDITORIAL)         -->
   <!-- ===================================================================== -->
   <div id="operaOverlay" class="fixed inset-0 z-40 flex items-center justify-center overflow-hidden p-3 sm:p-6 bg-black/60 backdrop-blur-sm">
@@ -286,7 +300,7 @@
 
         <!-- Aristocratic Subtitle -->
         <div class="font-sans-detail text-[10px] sm:text-[11px] tracking-[0.3em] uppercase text-amber-900 font-bold mb-1.5">
-          Real Sociedad Filarmónica de Maipú
+          Real Casa Cumpleañera de Maipú
         </div>
 
         <!-- Main Title: Formal Gala -->
@@ -412,14 +426,19 @@
             <span>🍺</span> ¡Chocar el Vaso! (<span id="toastCount">0</span>)
           </button>
 
-          <!-- BEER LEVEL METER ON THE RIGHT SIDE OF PHOTO -->
-          <div class="absolute bottom-14 right-3 bg-black/85 border-2 border-amber-300 rounded-xl p-2 w-24 text-center shadow-lg">
-            <div class="text-[10px] font-black uppercase text-amber-300 leading-tight mb-1">
-              Nivel del Vaso
+          <!-- REALISTIC DRINK GLASS (VASO DE FIESTA) OVER PHOTO -->
+          <div class="absolute bottom-4 right-3 bg-black/85 border-2 border-amber-300/80 rounded-2xl p-2.5 w-24 text-center shadow-2xl backdrop-blur-md">
+            <div class="text-[9px] font-black uppercase text-amber-300 tracking-wider mb-1.5 flex items-center justify-center gap-1">
+              <span>🥃</span> <span>Vaso</span>
             </div>
-            <div class="w-full h-3 bg-stone-800 rounded-full overflow-hidden border border-amber-400/50">
-              <div id="beerMeterFill" class="h-full bg-gradient-to-r from-amber-500 via-yellow-400 to-lime-400 transition-all duration-500" style="width: 35%;"></div>
+            <div class="relative w-12 h-20 mx-auto border-2 border-stone-400/90 rounded-b-xl rounded-t-sm bg-stone-950/80 overflow-hidden flex flex-col justify-end shadow-inner">
+              <div id="beerMeterFill" class="w-full bg-gradient-to-t from-amber-950 via-amber-700 to-amber-500 transition-all duration-300" style="height: 15%;"></div>
+              <div class="absolute top-1 inset-x-0 text-[10px] text-center opacity-80 pointer-events-none">🧊</div>
             </div>
+            <div id="beerMeterText" class="text-[10px] font-extrabold text-lime-300 mt-1.5">
+              15% Servido
+            </div>
+          </div>
             <div id="beerMeterText" class="text-[11px] font-extrabold text-lime-300 mt-1">
               35% Caos
             </div>
@@ -634,13 +653,7 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          <button
-            id="copyAddressBtn"
-            type="button"
-            class="bg-stone-800 hover:bg-stone-700 text-white border border-amber-400/50 font-bold text-xs py-2.5 px-3 rounded-xl transition flex items-center justify-center gap-1.5"
-          >
-            <span>📋</span> Copiar Dirección
-          </button>
+          
           <button
             id="rsvpWhatsappBtn"
             type="button"
@@ -700,18 +713,20 @@
         </p>
       </div>
 
-      <!-- Animated Beer Glass Progress in Modal -->
-      <div class="bg-black/80 border border-amber-400/50 rounded-2xl p-3 mb-4 flex items-center gap-3">
-        <div class="relative w-12 h-16 border-2 border-amber-200 rounded-b-xl rounded-t-sm overflow-hidden bg-stone-900 shrink-0 flex flex-col justify-end">
-          <div id="modalBeerLiquid" class="w-full bg-gradient-to-t from-amber-600 via-amber-400 to-yellow-200 transition-all duration-500" style="height: 0%;"></div>
+      <!-- Animated Piscola Glass Progress in Modal -->
+      <div class="bg-black/85 border border-amber-400/50 rounded-2xl p-3 mb-4 flex items-center gap-3">
+        <!-- Vaso de Piscola -->
+        <div class="relative w-12 h-16 border-2 border-amber-300/80 rounded-b-xl rounded-t-sm overflow-hidden bg-stone-950 shrink-0 flex flex-col justify-end shadow-inner">
+          <div id="modalBeerLiquid" class="w-full bg-gradient-to-t from-[#150702] via-[#2c1004] to-[#4a1c06] transition-all duration-500" style="height: 0%;"></div>
+          <div class="absolute top-1 inset-x-0 text-[10px] text-center opacity-80 pointer-events-none">🧊</div>
         </div>
         <div class="flex-1">
           <div class="flex justify-between text-xs font-bold mb-1">
             <span class="text-amber-300" id="triviaProgressLabel">Pregunta 1 de 4</span>
-            <span class="text-lime-400" id="triviaScoreLabel">0% Lleno</span>
+            <span class="text-amber-200" id="triviaScoreLabel">Vaso de Piscola</span>
           </div>
           <div class="w-full h-2.5 bg-stone-800 rounded-full overflow-hidden">
-            <div id="triviaProgressBar" class="h-full bg-lime-400 transition-all duration-300" style="width: 25%;"></div>
+            <div id="triviaProgressBar" class="h-full bg-gradient-to-r from-amber-600 to-yellow-400 transition-all duration-300" style="width: 25%;"></div>
           </div>
         </div>
       </div>
@@ -758,9 +773,7 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <button id="shareTriviaResultBtn" type="button" class="bg-lime-400 hover:bg-lime-300 text-black font-black text-xs py-3 px-4 rounded-xl shadow">
-            📋 Copiar mi Rango VIP
-          </button>
+          
           <button id="restartTriviaBtn" type="button" class="bg-stone-800 hover:bg-stone-700 text-amber-300 border border-amber-400/50 font-bold text-xs py-3 px-4 rounded-xl">
             🔄 Jugar de Nuevo
           </button>
@@ -908,15 +921,85 @@
     // =========================================================================
     // FASE 1 -> FASE 2: RASGAR EL PERGAMINO DE ÓPERA
     // =========================================================================
+        // =========================================================================
+    // YOUTUBE BACKGROUND AUDIO API (Enjoy The Silence - Depeche Mode)
+    // =========================================================================
+    let ytPlayer = null;
+    let isMusicPlaying = false;
+
+    window.onYouTubeIframeAPIReady = function() {
+      ytPlayer = new YT.Player('ytAudioPlayer', {
+        height: '1',
+        width: '1',
+        videoId: 'aGSKrC7dGcY',
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          loop: 1,
+          playlist: 'aGSKrC7dGcY',
+          playsinline: 1,
+          enablejsapi: 1
+        },
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    };
+
+    function onPlayerReady(event) {
+      if (soundEnabled && isMusicPlaying) {
+        event.target.playVideo();
+      }
+    }
+
+    function onPlayerStateChange(event) {
+      const musicPlayIcon = document.getElementById('musicPlayIcon');
+      const musicPauseIcon = document.getElementById('musicPauseIcon');
+      const musicPulseDot = document.getElementById('musicPulseDot');
+      if (event.data === YT.PlayerState.PLAYING) {
+        isMusicPlaying = true;
+        if (musicPlayIcon) musicPlayIcon.classList.add('hidden');
+        if (musicPauseIcon) musicPauseIcon.classList.remove('hidden');
+        if (musicPulseDot) musicPulseDot.className = 'w-2 h-2 rounded-full bg-red-600 animate-pulse';
+      } else {
+        isMusicPlaying = false;
+        if (musicPlayIcon) musicPlayIcon.classList.remove('hidden');
+        if (musicPauseIcon) musicPauseIcon.classList.add('hidden');
+        if (musicPulseDot) musicPulseDot.className = 'w-2 h-2 rounded-full bg-stone-500';
+      }
+    }
+
+    function toggleMusicPlayback() {
+      if (!ytPlayer || typeof ytPlayer.getPlayerState !== 'function') return;
+      const state = ytPlayer.getPlayerState();
+      if (state === YT.PlayerState.PLAYING) {
+        ytPlayer.pauseVideo();
+      } else {
+        ytPlayer.playVideo();
+      }
+    }
+
+    const musicToggleBtn = document.getElementById('musicToggleBtn');
+    if (musicToggleBtn) {
+      musicToggleBtn.addEventListener('click', toggleMusicPlayback);
+    }
+
+    // =========================================================================
+    // PROTOCOLO DE APERTURA (ROMPE EL SELLO & INICIA MÚSICA)
+    // =========================================================================
     const operaOverlay = document.getElementById('operaOverlay');
     const parchmentLeft = document.getElementById('parchmentLeft');
     const parchmentRight = document.getElementById('parchmentRight');
     const operaCardContent = document.getElementById('operaCardContent');
     const tearSealBtn = document.getElementById('tearSealBtn');
-    const replayIntroBtn = document.getElementById('replayIntroBtn');
 
     function tearInvitationOpen() {
       playOperaTearSound();
+      if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+        ytPlayer.playVideo();
+        isMusicPlaying = true;
+      }
       operaCardContent.style.transform = 'scale(1.12) rotate(-3deg)';
       operaCardContent.style.opacity = '0';
       parchmentLeft.classList.add('torn-left');
@@ -924,43 +1007,16 @@
 
       setTimeout(() => {
         operaOverlay.classList.add('hidden');
-        replayIntroBtn.classList.remove('hidden');
         spawnCupBubbles(8);
-        showToast('🎉 ¡Protocolo destruido! Bienvenido a los deseados 35 años');
+        showToast('🌹 ¡Bienvenido a los 35 de Bárbara! (Depeche Mode Edition)');
       }, 850);
     }
 
-    function replayOperaIntro() {
-      operaOverlay.classList.remove('hidden');
-      replayIntroBtn.classList.add('hidden');
-      setTimeout(() => {
-        parchmentLeft.classList.remove('torn-left');
-        parchmentRight.classList.remove('torn-right');
-        operaCardContent.style.transform = 'scale(1) rotate(0deg)';
-        operaCardContent.style.opacity = '1';
-      }, 20);
-    }
-
     tearSealBtn.addEventListener('click', tearInvitationOpen);
-    replayIntroBtn.addEventListener('click', replayOperaIntro);
-
-    // Audio Toggle
-    const audioToggleBtn = document.getElementById('audioToggleBtn');
-    const audioIcon = document.getElementById('audioIcon');
-    const audioLabel = document.getElementById('audioLabel');
-    audioToggleBtn.addEventListener('click', () => {
-      soundEnabled = !soundEnabled;
-      audioIcon.textContent = soundEnabled ? '🔊' : '🔇';
-      audioLabel.textContent = soundEnabled ? 'Sonido ON' : 'Sonido OFF';
-      if (soundEnabled) playClinkSound();
-    });
 
     // =========================================================================
-    // PHOTO CONTEXT ANIMATION: BUBBLES FROM THE BEER CUP & LAUGH WAVES
+    // FOTO INTERACTIVA: VASO QUE SE LLENA Y SE VACÍA CON DELAY
     // =========================================================================
-    let toastCounter = 0;
-    let beerLevel = 35;
-    const cupBubbleZone = document.getElementById('cupBubbleZone');
     const toastCupBtn = document.getElementById('toastCupBtn');
     const toastCountEl = document.getElementById('toastCount');
     const beerMeterFill = document.getElementById('beerMeterFill');
@@ -968,128 +1024,92 @@
     const laughBadge = document.getElementById('laughBadge');
     const photoStage = document.getElementById('photoStage');
 
+    let drinkLevel = 15;
+    let toastCounter = 0;
+    let hasAlertedEbriety = false;
+
     const laughPhrases = [
-      '¡JAJAJA! 🥂✨',
-      '¡SALUD POR LOS 35! 🍺',
-      '¡A LAS 22:01 NO ABRO! 🚫',
-      '¡CERVEZA, VINO Y PISCO! 🍷',
-      '¡PIKUNTACTITUD REAL! 👑'
+      '¡SALUD POR LOS 35! 🥂',
+      '¡HOY SE TOMA HASTA LAS 03:30! 💃',
+      '¡PISCOLA, CERVEZA Y VINO! 🍻',
+      '¡A LAS 22:01 NO SE ABRE LA REJA! 🚪',
+      '¡DEPECHE MODE A TODO VOLUMEN! 🌹',
+      '¡QUE EL LUNES NO ME ESPEREN! 🍾',
+      '¡UN BRINDIS POR LA REINA BÁRBARA! 👑',
+      '¡EL HIELO NO SE LE NIEGA A NADIE! 🧊',
+      '¡EL MEJOR CARRETE DEL AÑO! 🎉',
+      '¡LA DIGNIDAD SE QUEDA EN LA ENTRADA! ✨'
     ];
 
-    function updateBeerLevel(newLevel) {
-      beerLevel = Math.min(100, Math.max(15, newLevel));
-      beerMeterFill.style.width = beerLevel + '%';
-      beerMeterText.textContent = beerLevel + '% Espuma';
-    }
-
-    function spawnCupBubbles(count = 5) {
-      const icons = ['🍺', '🍷', '🫧', '✨', '🍋', '👑'];
-      for (let i = 0; i < count; i++) {
-        const b = document.createElement('div');
-        b.className = 'cup-bubble text-base sm:text-lg';
-        b.textContent = icons[Math.floor(Math.random() * icons.length)];
-        b.style.left = (Math.random() * 70) + 'px';
-        b.style.bottom = (Math.random() * 20) + 'px';
-        b.style.animationDelay = (i * 0.12) + 's';
-        cupBubbleZone.appendChild(b);
-        setTimeout(() => {
-          if (b.parentNode) b.parentNode.removeChild(b);
-        }, 2700);
+    function updateDrinkMeter(pct) {
+      if (!beerMeterFill || !beerMeterText) return;
+      beerMeterFill.style.height = pct + '%';
+      if (pct >= 100) {
+        beerMeterText.textContent = '¡100% Lleno!';
+        beerMeterText.className = 'text-[10px] font-black text-red-400 animate-pulse mt-1.5';
+      } else {
+        beerMeterText.textContent = pct + '% Servido';
+        beerMeterText.className = 'text-[10px] font-extrabold text-lime-300 mt-1.5';
       }
     }
+
+    // Vaciar el vaso con delay (cada 2.5 segundos baja 2%)
+    setInterval(() => {
+      if (drinkLevel > 10) {
+        drinkLevel = Math.max(10, drinkLevel - 2);
+        updateDrinkMeter(drinkLevel);
+        if (drinkLevel < 90) {
+          hasAlertedEbriety = false;
+        }
+      }
+    }, 2500);
 
     function triggerPhotoToast(e) {
       if (e) e.stopPropagation();
       toastCounter++;
-      toastCountEl.textContent = toastCounter;
+      if (toastCountEl) toastCountEl.textContent = toastCounter;
       playClinkSound();
       spawnCupBubbles(6);
-      updateBeerLevel(beerLevel + 5);
+
+      // Llena el vaso con toques más lentos (+7% por toque)
+      drinkLevel = Math.min(100, drinkLevel + 7);
+      updateDrinkMeter(drinkLevel);
+
+      if (drinkLevel >= 100 && !hasAlertedEbriety) {
+        hasAlertedEbriety = true;
+        showToast('🚨 ¡Cuidado! Vas camino a ponerte ebrio/a antes de las 22:00 hrs 🍷😵');
+      }
+
       laughBadge.classList.remove('hidden');
       laughBadge.textContent = laughPhrases[toastCounter % laughPhrases.length];
-      showToast('🍻 ¡Salud por esos deseados 35 años! (Cerveza, vino y pisco)');
     }
 
     toastCupBtn.addEventListener('click', triggerPhotoToast);
-    photoStage.addEventListener('click', () => {
-      spawnCupBubbles(4);
-      playClinkSound();
-      laughBadge.classList.remove('hidden');
-      laughBadge.textContent = laughPhrases[Math.floor(Math.random() * laughPhrases.length)];
-    });
-
-    // Periodic ambient bubbles from the cup in the photo
-    setInterval(() => {
-      spawnCupBubbles(2);
-    }, 3500);
+    photoStage.addEventListener('click', triggerPhotoToast);
 
     // =========================================================================
-    // COUNTDOWN TO FRIDAY, NOVEMBER 27, 2026 AT 20:00 HRS
+    // WHATSAPP DIRECTO A BÁRBARA (+56975177840)
     // =========================================================================
-    const targetDate = new Date('2026-11-27T20:00:00-03:00').getTime();
-    function updateCountdown() {
-      const now = Date.now();
-      const diff = Math.max(0, targetDate - now);
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const mins = Math.floor((diff / 1000 / 60) % 60);
-      const secs = Math.floor((diff / 1000) % 60);
-
-      document.getElementById('cdDays').textContent = String(days).padStart(2, '0');
-      document.getElementById('cdHours').textContent = String(hours).padStart(2, '0');
-      document.getElementById('cdMins').textContent = String(mins).padStart(2, '0');
-      document.getElementById('cdSecs').textContent = String(secs).padStart(2, '0');
-    }
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-
-    // =========================================================================
-    // GIFT POLICY INTERACTIVE BUTTONS
-    // =========================================================================
-    const giftBtnEmployed = document.getElementById('giftBtnEmployed');
-    const giftBtnUnemployed = document.getElementById('giftBtnUnemployed');
-    const giftStatusFeedback = document.getElementById('giftStatusFeedback');
-
-    giftBtnEmployed.addEventListener('click', () => {
-      playClinkSound();
-      giftBtnEmployed.className = 'bg-amber-400 text-black font-extrabold text-xs py-2.5 px-3 rounded-lg transition flex items-center justify-center gap-1.5 shadow';
-      giftBtnUnemployed.className = 'bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-600 font-bold text-xs py-2.5 px-3 rounded-lg transition flex items-center justify-center gap-1.5';
-      giftStatusFeedback.textContent = '✅ Excelente: Tu regalo asegura el cariño de la anfitriona por un año más.';
-      giftStatusFeedback.className = 'text-xs text-lime-300 font-semibold mt-2.5 text-center';
-    });
-
-    giftBtnUnemployed.addEventListener('click', () => {
-      playClinkSound();
-      giftBtnUnemployed.className = 'bg-fuchsia-500 text-white font-extrabold text-xs py-2.5 px-3 rounded-lg transition flex items-center justify-center gap-1.5 shadow';
-      giftBtnEmployed.className = 'bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-600 font-bold text-xs py-2.5 px-3 rounded-lg transition flex items-center justify-center gap-1.5';
-      giftStatusFeedback.textContent = '⚖️ Exención aprobada: Presentar finiquito o certificado de cesantía en puerta y pasar directo a la barra.';
-      giftStatusFeedback.className = 'text-xs text-amber-300 font-semibold mt-2.5 text-center';
-    });
-
-    // =========================================================================
-    // PUNCTUALITY SWITCH TO UNLOCK ADDRESS & MAPS
-    // =========================================================================
-    let isPunctualityAccepted = false;
     const punctualityToggle = document.getElementById('punctualityToggle');
     const punctualityKnob = document.getElementById('punctualityKnob');
     const locationLockedBox = document.getElementById('locationLockedBox');
     const locationUnlockedBox = document.getElementById('locationUnlockedBox');
-    const copyAddressBtn = document.getElementById('copyAddressBtn');
     const rsvpWhatsappBtn = document.getElementById('rsvpWhatsappBtn');
+
+    let isPunctualityAccepted = false;
 
     punctualityToggle.addEventListener('click', () => {
       isPunctualityAccepted = !isPunctualityAccepted;
       punctualityToggle.setAttribute('aria-checked', String(isPunctualityAccepted));
 
       if (isPunctualityAccepted) {
-        playOperaTearSound();
         punctualityToggle.classList.remove('bg-stone-700');
         punctualityToggle.classList.add('bg-lime-500');
         punctualityKnob.classList.add('translate-x-6');
         locationLockedBox.classList.add('hidden');
         locationUnlockedBox.classList.remove('hidden');
-        updateBeerLevel(Math.max(beerLevel, 75));
-        showToast('🔓 ¡Coordenadas desbloqueadas! Nueva Antumalal 146, Maipú');
+        playClinkSound();
+        showToast('🔓 ¡Ubicación desbloqueada! Nos vemos en Nueva Antumalal 146');
       } else {
         punctualityToggle.classList.add('bg-stone-700');
         punctualityToggle.classList.remove('bg-lime-500');
@@ -1099,16 +1119,13 @@
       }
     });
 
-    copyAddressBtn.addEventListener('click', () => {
-      copyTextToClipboard(
-        'Nueva Antumalal 146, Maipú (Viernes 27 de noviembre, llegada estricta entre 20:00 y 22:00 hrs)',
-        '📋 ¡Dirección copiada! Nueva Antumalal 146, Maipú'
-      );
-    });
-
     rsvpWhatsappBtn.addEventListener('click', () => {
-      const msg = '¡Confirmo mi asistencia a tus deseados 35 años el viernes 27 de noviembre en Nueva Antumalal 146, Maipú! Juro llegar entre las 20:00 y 22:00 hrs 👑🍺';
-      copyTextToClipboard(msg, '💬 ¡Mensaje de confirmación copiado para pegar en WhatsApp!');
+      const hasWonCoupon = localStorage.getItem('barbaraTriviaScore') === '4';
+      let msg = '¡Hola Bárbara! 👑 Confirmo mi asistencia a tus deseados 35 años este viernes 27 de noviembre en Nueva Antumalal 146, Maipú. ¡Llegaré puntual entre las 20:00 y 22:00 hrs para celebrar con todo! 🥂🎉';
+      if (hasWonCoupon) {
+        msg = '¡Hola Bárbara! 👑 Confirmo mi asistencia a tus deseados 35 años este viernes 27 de noviembre en Nueva Antumalal 146. Además, ¡saqué 4/4 en la trivia y tengo mi cupón listo para cobrar mi premio sorpresa en la barra! 🎟️🍾🥂';
+      }
+      window.open(`https://wa.me/56975177840?text=${encodeURIComponent(msg)}`, '_blank');
     });
 
     // =========================================================================
@@ -1161,7 +1178,7 @@
       }
     ];
 
-    let currentQ = 0;
+        let currentQ = 0;
     let score = 0;
     let answeredCurrent = false;
 
@@ -1178,17 +1195,16 @@
     const triviaScoreLabel = document.getElementById('triviaScoreLabel');
     const triviaProgressBar = document.getElementById('triviaProgressBar');
     const modalBeerLiquid = document.getElementById('modalBeerLiquid');
-    const shareTriviaResultBtn = document.getElementById('shareTriviaResultBtn');
     const restartTriviaBtn = document.getElementById('restartTriviaBtn');
 
     function renderTriviaQuestion() {
       answeredCurrent = false;
       const item = triviaQuestions[currentQ];
       triviaProgressLabel.textContent = `Pregunta ${currentQ + 1} de ${triviaQuestions.length}`;
-      const pct = Math.round((score / triviaQuestions.length) * 100);
-      triviaScoreLabel.textContent = `${pct}% Vaso Lleno`;
+      const pct = Math.round(((currentQ) / triviaQuestions.length) * 100);
+      triviaScoreLabel.textContent = `Vaso de Piscola`;
       triviaProgressBar.style.width = `${((currentQ + 1) / triviaQuestions.length) * 100}%`;
-      modalBeerLiquid.style.height = `${pct}%`;
+      modalBeerLiquid.style.height = `${(score / triviaQuestions.length) * 100}%`;
 
       triviaQuestionText.textContent = item.q;
       triviaOptionsList.innerHTML = '';
@@ -1199,7 +1215,7 @@
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'w-full text-left p-3 rounded-xl border border-stone-700 bg-stone-900 hover:bg-purple-950/60 hover:border-amber-400 text-xs sm:text-sm font-semibold text-stone-100 transition flex items-center justify-between gap-2';
-        btn.innerHTML = `<span>${optText}</span><span class="text-stone-500">○</span>`;
+        btn.innerHTML = `<span>${optText}</span><span class="text-stone-500">❖</span>`;
         btn.addEventListener('click', () => selectTriviaOption(idx, btn));
         triviaOptionsList.appendChild(btn);
       });
@@ -1216,24 +1232,22 @@
         score++;
         playClinkSound();
         clickedBtn.className = 'w-full text-left p-3 rounded-xl border-2 border-lime-400 bg-emerald-950/80 text-xs sm:text-sm font-extrabold text-lime-200 flex items-center justify-between gap-2';
-        clickedBtn.querySelector('span:last-child').textContent = '✅';
-        triviaFeedbackBox.textContent = '✅ ' + item.feedbackOk;
+        clickedBtn.querySelector('span:last-child').textContent = '✓';
+        triviaFeedbackBox.textContent = '✓ ' + item.feedbackOk;
         triviaFeedbackBox.className = 'mt-3 p-3 rounded-xl text-xs font-bold bg-emerald-950 border border-lime-400 text-lime-200';
       } else {
         playBuzzerSound();
         clickedBtn.className = 'w-full text-left p-3 rounded-xl border-2 border-red-500 bg-red-950/80 text-xs sm:text-sm font-extrabold text-red-200 flex items-center justify-between gap-2';
-        clickedBtn.querySelector('span:last-child').textContent = '❌';
+        clickedBtn.querySelector('span:last-child').textContent = '✕';
         allButtons[item.correct].className = 'w-full text-left p-3 rounded-xl border-2 border-lime-400 bg-emerald-950/50 text-xs sm:text-sm font-bold text-lime-200 flex items-center justify-between gap-2';
-        triviaFeedbackBox.textContent = '🚨 ' + item.feedbackBad;
+        triviaFeedbackBox.textContent = '✕ ' + item.feedbackBad;
         triviaFeedbackBox.className = 'mt-3 p-3 rounded-xl text-xs font-bold bg-red-950 border border-red-400 text-red-200';
       }
 
       const pct = Math.round((score / triviaQuestions.length) * 100);
-      triviaScoreLabel.textContent = `${pct}% Vaso Lleno`;
       modalBeerLiquid.style.height = `${pct}%`;
-      updateBeerLevel(Math.max(35, pct));
 
-      triviaNextBtn.textContent = currentQ < triviaQuestions.length - 1 ? 'Siguiente Pregunta →' : 'Ver mi Rango de Invitado 👑';
+      triviaNextBtn.textContent = currentQ < triviaQuestions.length - 1 ? 'Siguiente Pregunta ➜' : 'Ver Resultado 👑';
       triviaNextBtn.classList.remove('hidden');
     }
 
@@ -1242,11 +1256,14 @@
         currentQ++;
         renderTriviaQuestion();
       } else {
+        // Registrar intento único en localStorage
+        localStorage.setItem('barbaraTriviaPlayed', 'true');
+        localStorage.setItem('barbaraTriviaScore', String(score));
         showTriviaFinalResults();
       }
     });
 
-        function showTriviaFinalResults() {
+    function showTriviaFinalResults() {
       triviaQuestionBox.classList.add('hidden');
       triviaResultBox.classList.remove('hidden');
       playOperaTearSound();
@@ -1265,9 +1282,16 @@
         resultEmoji.textContent = '👑🥂🎉';
         resultTitle.textContent = '¡CONOCES A BÁRBARA AL 100%! (4/4)';
         resultDesc.textContent = '¡Puntaje perfecto indiscutible! Te sabes su fecha, signo, historia y gustos al revés y al derecho. Tienes tu pase oficial al premio sorpresa.';
+        // Si ganó el cupón, se oculta el botón de jugar de nuevo
+        if (restartTriviaBtn) {
+          restartTriviaBtn.classList.add('hidden');
+        }
       } else {
         couponContainer.classList.add('hidden');
         ironicMessageBox.classList.remove('hidden');
+        if (restartTriviaBtn) {
+          restartTriviaBtn.classList.add('hidden'); // Solo un intento permitido para todos
+        }
 
         if (score === 3) {
           resultEmoji.textContent = '🤦‍♀️👀';
@@ -1297,158 +1321,36 @@
       }
     }
 
-    function resetAndOpenTrivia() {
+    function openTriviaFlow() {
+      // Si ya jugó, mostrar su resultado guardado
+      if (localStorage.getItem('barbaraTriviaPlayed') === 'true') {
+        const saved = parseInt(localStorage.getItem('barbaraTriviaScore') || '0', 10);
+        score = saved;
+        triviaModal.classList.remove('hidden');
+        triviaQuestionBox.classList.add('hidden');
+        triviaResultBox.classList.remove('hidden');
+        showTriviaFinalResults();
+        showToast('ℹ️ Ya registraste tu único intento en la trivia oficial.');
+        return;
+      }
+
       currentQ = 0;
       score = 0;
       triviaResultBox.classList.add('hidden');
-      document.getElementById('couponContainer').classList.add('hidden');
-      document.getElementById('ironicMessageBox').classList.add('hidden');
+      const cc = document.getElementById('couponContainer');
+      const imb = document.getElementById('ironicMessageBox');
+      if (cc) cc.classList.add('hidden');
+      if (imb) imb.classList.add('hidden');
       triviaQuestionBox.classList.remove('hidden');
       renderTriviaQuestion();
       triviaModal.classList.remove('hidden');
       playClinkSound();
     }
 
-    
-    // =========================================================================
-    // GENERADOR DE CUPÓN OFICIAL VIP (CANVAS 2X RETINA)
-    // =========================================================================
-    function generateAndDownloadCoupon() {
-      const canvas = document.createElement('canvas');
-      const w = 1200;
-      const h = 630;
-      canvas.width = w;
-      canvas.height = h;
-      const ctx = canvas.getContext('2d');
-
-      // 1. Fondo Oscuro Lujoso con Degradado
-      const bgGrad = ctx.createLinearGradient(0, 0, w, h);
-      bgGrad.addColorStop(0, '#1a0e05');
-      bgGrad.addColorStop(0.5, '#0d0703');
-      bgGrad.addColorStop(1, '#1b0718');
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, w, h);
-
-      // 2. Marco Dorado de Lujo (Borde Doble)
-      ctx.strokeStyle = '#ffd700';
-      ctx.lineWidth = 8;
-      ctx.strokeRect(25, 25, w - 50, h - 50);
-
-      ctx.strokeStyle = '#b8860b';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(40, 40, w - 80, h - 80);
-
-      // Esquinas ornamentales
-      ctx.fillStyle = '#ffd700';
-      [
-        [40, 40], [w - 40, 40], [40, h - 40], [w - 40, h - 40]
-      ].forEach(([x, y]) => {
-        ctx.beginPath();
-        ctx.arc(x, y, 10, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      // 3. Marca de agua central (Corona)
-      ctx.save();
-      ctx.font = '140px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.globalAlpha = 0.08;
-      ctx.fillText('👑', w / 2, h / 2 - 10);
-      ctx.restore();
-
-      // 4. Encabezado Real
-      ctx.textAlign = 'center';
-      ctx.fillStyle = '#f6d365';
-      ctx.font = 'bold 20px "Playfair Display", Georgia, serif';
-      ctx.letterSpacing = '4px';
-      ctx.fillText('★ REAL CASA CUMPLEAÑERA DE MAIPÚ ★', w / 2, 85);
-
-      // 5. Título Principal
-      ctx.font = '900 46px "Cinzel", Georgia, serif';
-      const titleGrad = ctx.createLinearGradient(w / 2 - 250, 0, w / 2 + 250, 0);
-      titleGrad.addColorStop(0, '#ffe066');
-      titleGrad.addColorStop(0.5, '#ffffff');
-      titleGrad.addColorStop(1, '#ffd700');
-      ctx.fillStyle = titleGrad;
-      ctx.fillText('CUPÓN PREMIO SORPRESA', w / 2, 150);
-
-      // 6. Subtítulo
-      ctx.font = 'bold 22px sans-serif';
-      ctx.fillStyle = '#f3e8ff';
-      ctx.fillText('LOS DESEADOS 35 AÑOS DE BÁRBARA DUHALDE', w / 2, 195);
-
-      // Línea divisoria decorativa
-      ctx.strokeStyle = '#ffd700';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(w / 2 - 280, 220);
-      ctx.lineTo(w / 2 + 280, 220);
-      ctx.stroke();
-
-      ctx.fillStyle = '#ffd700';
-      ctx.font = '18px sans-serif';
-      ctx.fillText('♦ ♦ ♦', w / 2, 225);
-
-      // 7. Caja de Certificación VIP
-      ctx.fillStyle = 'rgba(255, 215, 0, 0.12)';
-      ctx.strokeStyle = '#ffd700';
-      ctx.lineWidth = 2;
-      ctx.roundRect(140, 255, w - 280, 115, 18);
-      ctx.fill();
-      ctx.stroke();
-
-      ctx.fillStyle = '#a3e635';
-      ctx.font = '900 22px sans-serif';
-      ctx.fillText('👑 INVITADO/A VIP CERTIFICADO — 4/4 EN LA TRIVIA', w / 2, 295);
-
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 26px sans-serif';
-      ctx.fillText('VÁLIDO POR 1 PREMIO SORPRESA EN LA BARRA OFICIAL', w / 2, 340);
-
-      // 8. Instrucciones y Reglas de Oro
-      ctx.fillStyle = '#fef08a';
-      ctx.font = '19px sans-serif';
-      ctx.fillText('📅 Viernes 27 de Noviembre  •  📍 Nueva Antumalal 146, Maipú', w / 2, 415);
-
-      ctx.fillStyle = '#cbd5e1';
-      ctx.font = 'italic 16px sans-serif';
-      ctx.fillText('Presenta este cupón digital al ingresar. Llegada estricta entre 20:00 y 22:00 hrs.', w / 2, 450);
-
-      // 9. Barra Inferior Tipo Ticket / Folio
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
-      ctx.fillRect(40, h - 110, w - 80, 68);
-
-      const randomFolio = Math.floor(100000 + Math.random() * 900000);
-      ctx.fillStyle = '#94a3b8';
-      ctx.font = 'bold 15px monospace';
-      ctx.textAlign = 'left';
-      ctx.fillText(`FOLIO: BDAY35-BARBARA-${randomFolio}`, 70, h - 70);
-
-      ctx.textAlign = 'right';
-      ctx.fillStyle = '#fbbf24';
-      ctx.font = 'bold 16px sans-serif';
-      ctx.fillText('VÁLIDO SOLO EN VIVO • NO TRANSFERIBLE 🥂', w - 70, h - 70);
-
-      // Descargar la imagen
-      const link = document.createElement('a');
-      link.download = `Cupon_Premio_Sorpresa_Barbara35_${randomFolio}.png`;
-      link.href = canvas.toDataURL('image/png');
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      showToast('🎟️ ¡Cupón descargado! Guárdalo en tu galería para el viernes 27.');
-      playClinkSound();
+    openTriviaBtn.addEventListener('click', openTriviaFlow);
+    if (restartTriviaBtn) {
+      restartTriviaBtn.addEventListener('click', openTriviaFlow);
     }
-
-    const downloadCouponBtn = document.getElementById('downloadCouponBtn');
-    if (downloadCouponBtn) {
-      downloadCouponBtn.addEventListener('click', generateAndDownloadCoupon);
-    }
-
-    openTriviaBtn.addEventListener('click', resetAndOpenTrivia);
-    restartTriviaBtn.addEventListener('click', resetAndOpenTrivia);
     closeTriviaBtn.addEventListener('click', () => {
       triviaModal.classList.add('hidden');
     });
