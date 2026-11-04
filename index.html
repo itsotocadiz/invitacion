@@ -795,22 +795,22 @@
       if (!ctx) return;
 
       const now = ctx.currentTime;
-      // 1. Solemn chord that morphs into neon party arpeggio
-      const freqs = [261.63, 329.63, 392.00, 523.25, 659.25];
-      freqs.forEach((f, idx) => {
+      // Acorde cálido y aristocrático de arpa/cuerdas (ondas senoidales suaves, sin estridencias)
+      const chord = [146.83, 220.00, 293.66, 369.99, 440.00];
+      chord.forEach((freq, idx) => {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
-        osc.type = idx % 2 === 0 ? 'triangle' : 'sawtooth';
-        osc.frequency.setValueAtTime(f, now + idx * 0.06);
-        osc.frequency.exponentialRampToValueAtTime(f * 1.5, now + 0.45 + idx * 0.06);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.05);
 
-        gain.gain.setValueAtTime(0.08, now + idx * 0.06);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.65 + idx * 0.06);
+        gain.gain.setValueAtTime(0.001, now + idx * 0.05);
+        gain.gain.linearRampToValueAtTime(0.022, now + idx * 0.05 + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.05 + 0.85);
 
         osc.connect(gain);
         gain.connect(ctx.destination);
-        osc.start(now + idx * 0.06);
-        osc.stop(now + 0.7 + idx * 0.06);
+        osc.start(now + idx * 0.05);
+        osc.stop(now + idx * 0.05 + 0.9);
       });
     }
 
@@ -820,17 +820,21 @@
       if (!ctx) return;
 
       const now = ctx.currentTime;
-      [1046.5, 1318.5, 1567.98].forEach((freq, i) => {
+      // Toque sutil de cristal fino (resonancia suave, volumen bajo y sobrio)
+      const tones = [587.33, 880.00];
+      tones.forEach((freq, i) => {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, now + i * 0.04);
-        gain.gain.setValueAtTime(0.09, now + i * 0.04);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35 + i * 0.04);
+        osc.frequency.setValueAtTime(freq, now);
+
+        gain.gain.setValueAtTime(0.018, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.35);
+
         osc.connect(gain);
         gain.connect(ctx.destination);
-        osc.start(now + i * 0.04);
-        osc.stop(now + 0.38 + i * 0.04);
+        osc.start(now);
+        osc.stop(now + 0.38);
       });
     }
 
@@ -838,18 +842,22 @@
       if (!soundEnabled) return;
       const ctx = getAudioContext();
       if (!ctx) return;
+
       const now = ctx.currentTime;
+      // Toque sobrio de madera (reemplaza la bocina estridente por un sutil 'tap' apagado)
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(150, now);
-      osc.frequency.linearRampToValueAtTime(110, now + 0.25);
-      gain.gain.setValueAtTime(0.08, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(140, now);
+      osc.frequency.exponentialRampToValueAtTime(80, now + 0.15);
+
+      gain.gain.setValueAtTime(0.02, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
+
       osc.connect(gain);
       gain.connect(ctx.destination);
       osc.start(now);
-      osc.stop(now + 0.3);
+      osc.stop(now + 0.2);
     }
 
     // =========================================================================
