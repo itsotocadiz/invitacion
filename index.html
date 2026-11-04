@@ -446,69 +446,40 @@
           <!-- BUBBLES CONTAINER OVER THE BEER CUP -->
           <div id="cupBubbleZone" class="absolute bottom-24 left-12 w-24 h-44 pointer-events-none z-20"></div>
 
-          <!-- BOTÓN INTERACTIVO: SERVIR PISCOLA CON VASO Y BARRA DE PORCENTAJE -->
+          <!-- BOTÓN INTERACTIVO: SERVIR PISCOLA (LIMPIO, SIN BARRA INTERNA) -->
           <button
             id="toastCupBtn"
             type="button"
-            class="absolute bottom-3 left-2.5 sm:left-4 bg-gradient-to-br from-stone-950 via-black to-stone-900 border-2 border-amber-400 p-2 sm:p-2.5 rounded-2xl shadow-[0_0_25px_rgba(255,215,0,0.85)] active:scale-95 transition-all text-left flex flex-col gap-1.5 z-30 max-w-[170px] sm:max-w-[190px]"
+            class="absolute bottom-4 left-3 sm:left-5 bg-black/90 hover:bg-amber-400 hover:text-black text-amber-300 border-2 border-amber-400 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black shadow-[0_0_20px_rgba(255,215,0,0.75)] transition transform active:scale-95 flex items-center gap-2 z-30"
           >
-            <div class="flex items-center gap-2">
-              <!-- Vaso de Piscola animado en el botón -->
-              <div class="relative w-7 h-9 border border-amber-300 rounded-b-md bg-stone-900 overflow-hidden shrink-0 flex flex-col justify-end shadow-inner">
-                <span class="absolute top-0.5 inset-x-0 text-[8px] text-center pointer-events-none">🧊</span>
-                <div id="btnCupFill" class="w-full bg-gradient-to-t from-[#150502] via-[#2f0e04] to-[#591b07] border-t border-amber-400 transition-all duration-300" style="height: 0%;"></div>
-              </div>
-              <div>
-                <div class="text-[11px] sm:text-xs font-black uppercase text-amber-300 tracking-wide flex items-center gap-1">
-                  <span>🥃</span> ¡Servir Piscola!
-                </div>
-                <div class="text-[8px] sm:text-[9px] text-stone-300 font-semibold leading-tight">
-                  Toca para llenar (40 toques)
-                </div>
-              </div>
-            </div>
-            
-            <!-- Barra de Porcentaje en el botón -->
-            <div class="w-full bg-stone-950 rounded-full h-2 p-0.5 border border-amber-400/50 overflow-hidden relative">
-              <div id="btnProgressBar" class="h-full bg-gradient-to-r from-amber-500 via-yellow-400 to-lime-400 rounded-full transition-all duration-200" style="width: 0%;"></div>
-            </div>
-            <div class="flex justify-between items-center text-[8.5px] font-black tracking-tight">
-              <span class="text-stone-400">Progreso:</span>
-              <span id="btnPercentLabel" class="text-lime-400 font-extrabold text-[9.5px]">0%</span>
-            </div>
+            <span class="text-base sm:text-lg">🥃</span>
+            <span>Servir Piscola</span>
           </button>
 
-          <!-- EL PISCOLÓMETRO: REFLEJA LOS TOQUES DEL OTRO LADO -->
-          <div id="piscolaGlassWidget" class="absolute bottom-3 right-2.5 sm:right-4 bg-black/90 border-2 border-amber-400/90 rounded-2xl p-2 sm:p-2.5 w-28 sm:w-32 text-center shadow-[0_0_25px_rgba(0,0,0,0.9)] backdrop-blur-md select-none z-30">
-            <div class="text-[9px] font-black uppercase text-amber-300 tracking-wider mb-0.5 flex items-center justify-center gap-1">
+          <!-- EL PISCOLÓMETRO: SOLO EL TÍTULO Y EL VASO QUE HACE DE BARRA DE PROGRESO -->
+          <div id="piscolaGlassWidget" class="absolute bottom-4 right-3 sm:right-5 bg-black/90 border-2 border-amber-400/90 rounded-2xl p-2 w-24 sm:w-28 text-center shadow-[0_0_25px_rgba(0,0,0,0.9)] backdrop-blur-md select-none z-30">
+            <div class="text-[10px] sm:text-xs font-black uppercase text-amber-300 tracking-wider mb-2 flex items-center justify-center gap-1">
               <span>🥃</span> <span>El Piscolómetro</span>
             </div>
-            <div class="text-[8px] font-bold text-lime-400 uppercase tracking-widest mb-1">
-              40° • (Refleja toques)
-            </div>
             
-            <!-- Vaso de vidrio con hielos visibles -->
-            <div class="relative w-14 h-24 mx-auto border-2 border-white/40 rounded-b-xl rounded-t-sm bg-gradient-to-b from-white/10 to-transparent overflow-hidden flex flex-col justify-end shadow-inner">
+            <!-- Vaso de vidrio con hielos visibles (Actúa como la barra de progreso) -->
+            <div class="relative w-12 sm:w-14 h-24 mx-auto border-2 border-white/40 rounded-b-xl rounded-t-sm bg-gradient-to-b from-white/10 to-transparent overflow-hidden flex flex-col justify-end shadow-inner">
               <!-- Hielos flotando arriba -->
-              <div class="absolute top-2 inset-x-0 flex justify-center gap-0.5 z-20 pointer-events-none opacity-90 text-[11px]">
+              <div class="absolute top-2 inset-x-0 flex justify-center gap-0.5 z-20 pointer-events-none opacity-90 text-[10px]">
                 <span class="transform -rotate-12 drop-shadow">🧊</span>
                 <span class="transform rotate-12 drop-shadow">🧊</span>
               </div>
-              <div class="absolute top-8 left-2 z-20 pointer-events-none opacity-85 text-[10px]">
+              <div class="absolute top-8 left-1.5 z-20 pointer-events-none opacity-85 text-[9px]">
                 <span class="transform rotate-45 drop-shadow">🧊</span>
               </div>
-              <div class="absolute top-10 right-2 z-20 pointer-events-none opacity-85 text-[10px]">
+              <div class="absolute top-10 right-1.5 z-20 pointer-events-none opacity-85 text-[9px]">
                 <span class="transform -rotate-45 drop-shadow">🧊</span>
               </div>
 
-              <!-- Líquido Oscuro de Piscola (Coca Cola + Pisco) -->
+              <!-- Líquido Oscuro de Piscola (Coca Cola + Pisco) que se llena progresivamente -->
               <div id="beerMeterFill" class="w-full bg-gradient-to-t from-[#100401] via-[#240a02] to-[#451404] transition-all duration-300 relative border-t border-amber-400/40" style="height: 0%;">
                 <div class="absolute inset-x-0 top-0 h-1 bg-amber-400/50"></div>
               </div>
-            </div>
-
-            <div id="beerMeterText" class="text-[10px] font-extrabold text-stone-400 mt-1.5 leading-tight">
-              0% Vacío
             </div>
           </div>
         </div>
@@ -577,31 +548,21 @@
           <span class="bg-lime-400 text-black text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full tracking-wider">
             Acto II • Mecenazgo Líquido
           </span>
-          <span class="text-sm">🍺 🍷 🍋</span>
+          
         </div>
         <h3 class="font-royal text-base sm:text-lg font-bold text-white mb-2">
           Tragos por Cuenta de la Casa
         </h3>
         <div class="grid grid-cols-3 gap-2 mb-3 text-center font-sans-detail">
-          <div class="bg-black/70 border border-lime-400/50 rounded-xl p-2.5 flex flex-col items-center">
-            <svg class="w-6 h-6 text-lime-400 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M17 11h1a3 3 0 0 1 0 6h-1M9 2v3M12 2v3M15 2v3M6 8h11v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8z"/>
-            </svg>
-            <div class="text-xs font-extrabold text-lime-300">Cerveza</div>
+          <div class="bg-black/70 border border-lime-400/40 rounded-xl py-3 px-2 flex flex-col items-center justify-center">
+            <div class="text-xs sm:text-sm font-black text-lime-300 uppercase tracking-wider">Cerveza</div>
           </div>
-          <div class="bg-black/70 border border-fuchsia-400/50 rounded-xl p-2.5 flex flex-col items-center">
-            <svg class="w-6 h-6 text-fuchsia-400 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M8 22h8M12 15v7M17 3H7c0 4 2 8 5 8s5-4 5-8z"/>
-            </svg>
-            <div class="text-xs font-extrabold text-fuchsia-300">Vino</div>
+          <div class="bg-black/70 border border-fuchsia-400/40 rounded-xl py-3 px-2 flex flex-col items-center justify-center">
+            <div class="text-xs sm:text-sm font-black text-fuchsia-300 uppercase tracking-wider">Vino</div>
           </div>
-          <div class="bg-black/70 border border-amber-400/50 rounded-xl p-2.5 flex flex-col items-center">
-            <svg class="w-6 h-6 text-amber-400 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M6 3h12l-2 18H8L6 3zM6 8h12M10 12l2-2 2 2"/>
-            </svg>
-            <div class="text-xs font-extrabold text-amber-300">Pisco</div>
+          <div class="bg-black/70 border border-amber-400/40 rounded-xl py-3 px-2 flex flex-col items-center justify-center">
+            <div class="text-xs sm:text-sm font-black text-amber-300 uppercase tracking-wider">Pisco</div>
           </div>
-        </div>
         </div>
         <p class="text-xs sm:text-sm text-stone-200 bg-black/60 border border-white/15 rounded-xl p-2.5">
           ✨ <strong>Nota de la Gerencia:</strong> La casa financia exclusivamente <strong>cerveza, vino y pisco</strong>. Si su preferencia es otra, puede traerla con total libertad.
@@ -614,7 +575,7 @@
           <span class="bg-amber-400 text-black text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full tracking-wider">
             Acto III • Tributo a la Corona
           </span>
-          <span class="text-sm">🎁 ⚖️</span>
+          
         </div>
         <h3 class="font-royal text-base sm:text-lg font-bold text-white mb-1">
           Protocolo de Regalos y Exenciones
@@ -629,12 +590,8 @@
             Declara tu situación tributaria antes de entrar:
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <button id="giftBtnEmployed" type="button" class="bg-amber-400 text-black font-extrabold text-xs py-2.5 px-3 rounded-lg transition flex items-center justify-center gap-1.5 shadow">
-              <span>🎁</span> Tengo pega y llevo regalo
-            </button>
-            <button id="giftBtnUnemployed" type="button" class="bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-600 font-bold text-xs py-2.5 px-3 rounded-lg transition flex items-center justify-center gap-1.5">
-              <span>📄</span> Estoy sin trabajo (Exento)
-            </button>
+            <button id="giftBtnEmployed" type="button" class="bg-amber-400 text-black font-black text-xs py-2.5 px-3 rounded-lg transition flex items-center justify-center shadow">Tengo pega y llevo regalo</button>
+            <button id="giftBtnUnemployed" type="button" class="bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-600 font-bold text-xs py-2.5 px-3 rounded-lg transition flex items-center justify-center">Estoy sin trabajo (Exento)</button>
           </div>
           <p id="giftStatusFeedback" class="text-xs text-lime-300 font-semibold mt-2.5 text-center">
             ✅ Excelente: Tu regalo asegura el cariño de la anfitriona por un año más.
@@ -1245,7 +1202,9 @@
     setInterval(() => {
       if (drinkLevel > 0) {
         drinkLevel = Math.max(0, drinkLevel - 10);
-        updateDrinkMeter(drinkLevel);
+        if (beerMeterFill) {
+          beerMeterFill.style.height = drinkLevel + '%';
+        }
         if (drinkLevel < 90) {
           hasAlertedEbriety = false;
         }
@@ -1272,40 +1231,46 @@
         e.stopPropagation();
       }
       toastCounter++;
-      playClinkSound();
-      spawnCupBubbles(6);
+      
+      // Reproducir sonido de brindis de forma segura
+      try {
+        playClinkSound();
+      } catch (err) {}
 
       // Se llena en 40 toques (+2.5% por cada toque)
       drinkLevel = Math.min(100, drinkLevel + 2.5);
-      updateDrinkMeter(drinkLevel);
+      
+      // Actualizar el Piscolómetro (única barra de progreso)
+      if (beerMeterFill) {
+        beerMeterFill.style.height = drinkLevel + '%';
+      }
 
-      // Obtener la frase festiva
+      // Obtener y rotar la frase festiva
       const phrase = laughPhrases[toastCounter % laughPhrases.length];
 
-      // 1. Mostrar de inmediato en el banner superior de la foto con animación
+      // 1. Mostrar de inmediato en el banner superior con animación
       if (laughBadge) {
         if (laughBadgeText) {
           laughBadgeText.textContent = phrase;
         } else {
           laughBadge.textContent = phrase;
         }
-        laughBadge.style.transform = 'scale(1.1) rotate(' + (toastCounter % 2 === 0 ? '2deg' : '-2deg') + ')';
+        laughBadge.style.transform = 'scale(1.08) rotate(' + (toastCounter % 2 === 0 ? '1.5deg' : '-1.5deg') + ')';
         setTimeout(() => {
           laughBadge.style.transform = 'scale(1) rotate(0deg)';
-        }, 220);
+        }, 180);
       }
 
-      // 2. Generar burbuja flotante sobre la foto
+      // 2. Burbuja flotante animada sobre la foto
       spawnFloatingPartyBubble(phrase);
 
-      // 3. Alerta si llega al 100%
+      // 3. Alerta al llegar al 100% de la piscola
       if (drinkLevel >= 100 && !hasAlertedEbriety) {
         hasAlertedEbriety = true;
         showToast('🚨 ¡CUIDADO! Te tomaste la piscola entera de 40° y vas a ponerte ebrio/a antes de las 22:00 hrs 🍷😵');
       }
     }
 
-    // Asignar eventos: El botón de servir es el que ejecuta la acción
     if (toastCupBtn) {
       toastCupBtn.addEventListener('click', triggerPhotoToast);
       toastCupBtn.addEventListener('touchend', triggerPhotoToast);
