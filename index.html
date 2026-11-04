@@ -618,13 +618,35 @@
         </button>
       </div>
 
-      <!-- Final Result Container -->
+            <!-- Final Result Container -->
       <div id="triviaResultBox" class="hidden text-center py-2">
-        <div id="triviaResultEmoji" class="text-4xl mb-2">👑🍺</div>
+        <div id="triviaResultEmoji" class="text-4xl mb-2">👑🥂</div>
         <h3 id="triviaResultTitle" class="font-royal text-xl font-black text-lime-400 mb-1">
           ¡INVITADO DE ALTA ALCURNIA!
         </h3>
         <p id="triviaResultDesc" class="text-xs sm:text-sm text-stone-200 mb-4 leading-relaxed"></p>
+
+        <!-- Botón Especial para Descargar Cupón (Solo 4/4) -->
+        <div id="couponContainer" class="hidden mb-4 p-4 rounded-2xl bg-gradient-to-br from-amber-950/80 via-black to-purple-950/90 border-2 border-amber-300 shadow-[0_0_30px_rgba(255,215,0,0.6)] text-center">
+          <div class="text-xs uppercase tracking-widest font-black text-amber-300 mb-1 flex items-center justify-center gap-1.5">
+            <span>✨</span> ¡PUNTAJE PERFECTO 4/4 DESBLOQUEADO! <span>✨</span>
+          </div>
+          <p class="text-xs text-stone-200 mb-3">
+            Demostraste conocer a Bárbara al 100%. Descarga tu cupón oficial y preséntalo en la fiesta para recibir tu premio sorpresa.
+          </p>
+          <button id="downloadCouponBtn" type="button" class="w-full bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-black font-black text-xs sm:text-sm uppercase tracking-wider py-3.5 px-4 rounded-xl shadow-[0_0_20px_rgba(255,215,0,0.9)] border border-amber-100 transition transform active:scale-95 flex items-center justify-center gap-2">
+            <span class="text-base">🎟️</span> Descargar Cupón Premio Sorpresa
+          </button>
+        </div>
+
+        <!-- Mensaje Irónico por Falta de Conocimiento (Menos de 4/4) -->
+        <div id="ironicMessageBox" class="hidden mb-4 p-4 rounded-2xl bg-red-950/70 border-2 border-red-500/80 text-left text-xs sm:text-sm text-stone-200 shadow-[0_0_20px_rgba(239,68,68,0.4)]">
+          <div class="flex items-center gap-2 font-black text-red-400 uppercase tracking-wider mb-1 text-xs">
+            <span>🚨</span> <span id="ironicMessageBadge">FALTA DE CONOCIMIENTO DETECTADA</span>
+          </div>
+          <p id="ironicMessageContent" class="leading-relaxed"></p>
+        </div>
+
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <button id="shareTriviaResultBtn" type="button" class="bg-lime-400 hover:bg-lime-300 text-black font-black text-xs py-3 px-4 rounded-xl shadow">
             📋 Copiar mi Rango VIP
@@ -1106,7 +1128,7 @@
       }
     });
 
-    function showTriviaFinalResults() {
+        function showTriviaFinalResults() {
       triviaQuestionBox.classList.add('hidden');
       triviaResultBox.classList.remove('hidden');
       playOperaTearSound();
@@ -1114,19 +1136,46 @@
       const resultTitle = document.getElementById('triviaResultTitle');
       const resultDesc = document.getElementById('triviaResultDesc');
       const resultEmoji = document.getElementById('triviaResultEmoji');
+      const couponContainer = document.getElementById('couponContainer');
+      const ironicMessageBox = document.getElementById('ironicMessageBox');
+      const ironicMessageBadge = document.getElementById('ironicMessageBadge');
+      const ironicMessageContent = document.getElementById('ironicMessageContent');
 
-            if (score === 4) {
+      if (score === 4) {
+        couponContainer.classList.remove('hidden');
+        ironicMessageBox.classList.add('hidden');
         resultEmoji.textContent = '👑🥂🎉';
         resultTitle.textContent = '¡CONOCES A BÁRBARA AL 100%! (4/4)';
-        resultDesc.textContent = '¡Eres del círculo íntimo! Te sabes su cumpleaños, signo, historia y gustos al revés y al derecho. ¡A celebrar con todo sus 35 años!';
-      } else if (score >= 2) {
-        resultEmoji.textContent = '😎🍻';
-        resultTitle.textContent = 'BUEN AMIGO/A DE BÁRBARA (' + score + '/4)';
-        resultDesc.textContent = '¡Muy bien! Tienes buen conocimiento de la cumpleañera. ¡Prepárate para darlo todo el viernes 27 de noviembre!';
+        resultDesc.textContent = '¡Puntaje perfecto indiscutible! Te sabes su fecha, signo, historia y gustos al revés y al derecho. Tienes tu pase oficial al premio sorpresa.';
       } else {
-        resultEmoji.textContent = '😅🍷';
-        resultTitle.textContent = 'TE FALTA CONOCER MÁS A BÁRBARA (' + score + '/4)';
-        resultDesc.textContent = '¡Ojo ahí! Vas a tener que conversar más con Bárbara en la fiesta para ponerte al día.';
+        couponContainer.classList.add('hidden');
+        ironicMessageBox.classList.remove('hidden');
+
+        if (score === 3) {
+          resultEmoji.textContent = '🤦‍♀️👀';
+          resultTitle.textContent = 'CASI, PERO AQUÍ NO HAY PREMIO DE CONSUELO (3/4)';
+          resultDesc.textContent = 'Te caíste en una sola... y en los 35 de Bárbara la amistad no se mide con notas 6.0.';
+          ironicMessageBadge.textContent = '❌ CERO CUPÓN: TE FALTÓ UNA MATERIA';
+          ironicMessageContent.textContent = '¿Pensaste que por 3 buenas te ganarías el premio sorpresa? ¡Jamás! Tu único "premio" será una mirada juzgadora de Bárbara cuando pidas tu segundo trago. Te va a tocar darlo todo en la pista de baile y llevar un regalo de desagravio para ganarte el perdón.';
+        } else if (score === 2) {
+          resultEmoji.textContent = '🧐🤨';
+          resultTitle.textContent = '¿AMIGO/A O INFILTRADO DE FACEBOOK? (2/4)';
+          resultDesc.textContent = 'Achuntarle a la mitad es digno de un conocido lejano o de alguien que me tiene silenciada en historias.';
+          ironicMessageBadge.textContent = '🚨 NIVEL DE AMISTAD EN TELA DE JUICIO';
+          ironicMessageContent.textContent = 'Claramente nos conocemos de vista nomás. El cupón queda cancelado y confiscado. Tu premio sorpresa: una sesión exprés de 15 minutos en la entrada donde tendrás que recitar mi biografía antes de que te pasen un vaso con hielo.';
+        } else if (score === 1) {
+          resultEmoji.textContent = '🤡💀';
+          resultTitle.textContent = 'DESCONOCIMIENTO TOTAL Y VERGONZOSO (1/4)';
+          resultDesc.textContent = 'Una sola correcta de cuatro... Eso ya no es mala memoria, es desinterés con alevosía.';
+          ironicMessageBadge.textContent = '💀 VERGÜENZA AJENA PROTOCOLAR';
+          ironicMessageContent.textContent = '¿Una buena de cuatro? ¡Es casi una ofensa diplomática a la Real Casa Cumpleañera! Ni sueñes con cupón ni con premio sorpresa. Tu castigo oficial: te toca recoger los vasos plásticos al final de la fiesta (03:30 hrs) o pagar multa en líquido.';
+        } else {
+          resultEmoji.textContent = '🚨🚪';
+          resultTitle.textContent = '¿QUIÉN ERES Y CÓMO LLEGASTE A ESTE LINK? (0/4)';
+          resultDesc.textContent = '¡CERO! ¡Ni una sola! Ni la fecha, ni el signo, ni el helado... ¡Absolutamente nada!';
+          ironicMessageBadge.textContent = '⛔ CANDIDATO N°1 AL PORTAZO DIPLOMÁTICO';
+          ironicMessageContent.textContent = '¿Seguro/a que venías al cumpleaños de Bárbara y no te equivocaste de link? Con este puntaje, si llegas después de las 20:01 hrs directamente no te abrimos la reja. Favor presentarse con cédula de identidad y dos testigos presenciales que juren que te conozco.';
+        }
       }
     }
 
@@ -1134,10 +1183,150 @@
       currentQ = 0;
       score = 0;
       triviaResultBox.classList.add('hidden');
+      document.getElementById('couponContainer').classList.add('hidden');
+      document.getElementById('ironicMessageBox').classList.add('hidden');
       triviaQuestionBox.classList.remove('hidden');
       renderTriviaQuestion();
       triviaModal.classList.remove('hidden');
       playClinkSound();
+    }
+
+    
+    // =========================================================================
+    // GENERADOR DE CUPÓN OFICIAL VIP (CANVAS 2X RETINA)
+    // =========================================================================
+    function generateAndDownloadCoupon() {
+      const canvas = document.createElement('canvas');
+      const w = 1200;
+      const h = 630;
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+
+      // 1. Fondo Oscuro Lujoso con Degradado
+      const bgGrad = ctx.createLinearGradient(0, 0, w, h);
+      bgGrad.addColorStop(0, '#1a0e05');
+      bgGrad.addColorStop(0.5, '#0d0703');
+      bgGrad.addColorStop(1, '#1b0718');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      // 2. Marco Dorado de Lujo (Borde Doble)
+      ctx.strokeStyle = '#ffd700';
+      ctx.lineWidth = 8;
+      ctx.strokeRect(25, 25, w - 50, h - 50);
+
+      ctx.strokeStyle = '#b8860b';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(40, 40, w - 80, h - 80);
+
+      // Esquinas ornamentales
+      ctx.fillStyle = '#ffd700';
+      [
+        [40, 40], [w - 40, 40], [40, h - 40], [w - 40, h - 40]
+      ].forEach(([x, y]) => {
+        ctx.beginPath();
+        ctx.arc(x, y, 10, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // 3. Marca de agua central (Corona)
+      ctx.save();
+      ctx.font = '140px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.globalAlpha = 0.08;
+      ctx.fillText('👑', w / 2, h / 2 - 10);
+      ctx.restore();
+
+      // 4. Encabezado Real
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#f6d365';
+      ctx.font = 'bold 20px "Playfair Display", Georgia, serif';
+      ctx.letterSpacing = '4px';
+      ctx.fillText('★ REAL CASA CUMPLEAÑERA DE MAIPÚ ★', w / 2, 85);
+
+      // 5. Título Principal
+      ctx.font = '900 46px "Cinzel", Georgia, serif';
+      const titleGrad = ctx.createLinearGradient(w / 2 - 250, 0, w / 2 + 250, 0);
+      titleGrad.addColorStop(0, '#ffe066');
+      titleGrad.addColorStop(0.5, '#ffffff');
+      titleGrad.addColorStop(1, '#ffd700');
+      ctx.fillStyle = titleGrad;
+      ctx.fillText('CUPÓN PREMIO SORPRESA', w / 2, 150);
+
+      // 6. Subtítulo
+      ctx.font = 'bold 22px sans-serif';
+      ctx.fillStyle = '#f3e8ff';
+      ctx.fillText('LOS DESEADOS 35 AÑOS DE BÁRBARA DUHALDE', w / 2, 195);
+
+      // Línea divisoria decorativa
+      ctx.strokeStyle = '#ffd700';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(w / 2 - 280, 220);
+      ctx.lineTo(w / 2 + 280, 220);
+      ctx.stroke();
+
+      ctx.fillStyle = '#ffd700';
+      ctx.font = '18px sans-serif';
+      ctx.fillText('♦ ♦ ♦', w / 2, 225);
+
+      // 7. Caja de Certificación VIP
+      ctx.fillStyle = 'rgba(255, 215, 0, 0.12)';
+      ctx.strokeStyle = '#ffd700';
+      ctx.lineWidth = 2;
+      ctx.roundRect(140, 255, w - 280, 115, 18);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#a3e635';
+      ctx.font = '900 22px sans-serif';
+      ctx.fillText('👑 INVITADO/A VIP CERTIFICADO — 4/4 EN LA TRIVIA', w / 2, 295);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 26px sans-serif';
+      ctx.fillText('VÁLIDO POR 1 PREMIO SORPRESA EN LA BARRA OFICIAL', w / 2, 340);
+
+      // 8. Instrucciones y Reglas de Oro
+      ctx.fillStyle = '#fef08a';
+      ctx.font = '19px sans-serif';
+      ctx.fillText('📅 Viernes 27 de Noviembre  •  📍 Nueva Antumalal 146, Maipú', w / 2, 415);
+
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = 'italic 16px sans-serif';
+      ctx.fillText('Presenta este cupón digital al ingresar. Llegada estricta entre 20:00 y 22:00 hrs.', w / 2, 450);
+
+      // 9. Barra Inferior Tipo Ticket / Folio
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+      ctx.fillRect(40, h - 110, w - 80, 68);
+
+      const randomFolio = Math.floor(100000 + Math.random() * 900000);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = 'bold 15px monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText(`FOLIO: BDAY35-BARBARA-${randomFolio}`, 70, h - 70);
+
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#fbbf24';
+      ctx.font = 'bold 16px sans-serif';
+      ctx.fillText('VÁLIDO SOLO EN VIVO • NO TRANSFERIBLE 🥂', w - 70, h - 70);
+
+      // Descargar la imagen
+      const link = document.createElement('a');
+      link.download = `Cupon_Premio_Sorpresa_Barbara35_${randomFolio}.png`;
+      link.href = canvas.toDataURL('image/png');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      showToast('🎟️ ¡Cupón descargado! Guárdalo en tu galería para el viernes 27.');
+      playClinkSound();
+    }
+
+    const downloadCouponBtn = document.getElementById('downloadCouponBtn');
+    if (downloadCouponBtn) {
+      downloadCouponBtn.addEventListener('click', generateAndDownloadCoupon);
     }
 
     openTriviaBtn.addEventListener('click', resetAndOpenTrivia);
@@ -1147,7 +1336,7 @@
     });
 
     shareTriviaResultBtn.addEventListener('click', () => {
-      const text = `👑 ¡Saqué ${score}/5 en la Trivia Oficial de los Deseados 35 Años! Nos vemos el viernes 27 de noviembre (entre 20:00 y 22:00 hrs en punto) en Nueva Antumalal 146, Maipú 🍺🍷`;
+      const text = `👑 ¡Saqué ${score}/4 en la Trivia Oficial de los Deseados 35 Años! Nos vemos el viernes 27 de noviembre (entre 20:00 y 22:00 hrs en punto) en Nueva Antumalal 146, Maipú 🍺🍷`;
       copyTextToClipboard(text, '📋 ¡Resultado VIP copiado para compartir en WhatsApp!');
     });
   </script>
