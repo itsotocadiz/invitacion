@@ -242,10 +242,39 @@
       position: absolute;
       pointer-events: none;
       z-index: 40;
-      white-space: nowrap;
+      max-width: 82%;
+      text-align: center;
+      white-space: normal;
+      word-break: break-word;
       animation: floatPartyUp 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
       font-weight: 900;
       text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+      line-height: 1.25;
+    }
+
+  
+    /* VINTAGE RETRO LED MATRIX DISPLAY BOARD */
+    .led-display-board {
+      background-color: #060606;
+      background-image: radial-gradient(rgba(255, 35, 35, 0.22) 18%, transparent 20%);
+      background-size: 5px 5px;
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.95), 0 0 15px rgba(255, 0, 50, 0.25);
+      border: 3px solid #1a1a1a;
+      position: relative;
+    }
+    .led-display-board::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 40%, rgba(0,0,0,0.5) 100%);
+      pointer-events: none;
+    }
+    .led-ticker-text {
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      color: #ff2233;
+      text-shadow: 0 0 3px #ff2233, 0 0 8px #ff0022, 0 0 14px rgba(255,0,0,0.8);
     }
 
   </style>
@@ -383,17 +412,17 @@
   <!-- ===================================================================== -->
   <main id="mainChaosContainer" class="max-w-lg mx-auto pb-16 pt-2 px-3 sm:px-5 relative z-10">
 
-    <!-- TOP NEON TICKER -->
-    <div class="overflow-hidden bg-gradient-to-r from-fuchsia-700 via-purple-900 to-lime-600 border-y-2 border-amber-300 py-1.5 rounded-t-2xl shadow-lg mb-4">
-      <div class="marquee-track text-xs font-black tracking-widest uppercase text-white">
-        <span class="px-4">👑 GALA OFICIAL: MIS DESEADOS 35 AÑOS 👑</span>
-        <span class="px-4 text-amber-300">⚡ VIERNES 27 DE NOVIEMBRE ⚡</span>
-        <span class="px-4 text-lime-300">🚫 DESPUÉS DE LAS 22:00 HRS NO VENGA 🚫</span>
-        <span class="px-4">🍺 CERVEZA, VINO Y PISCO POR LA CASA 🍷</span>
-        <span class="px-4">👑 GALA OFICIAL: MIS DESEADOS 35 AÑOS 👑</span>
-        <span class="px-4 text-amber-300">⚡ VIERNES 27 DE NOVIEMBRE ⚡</span>
-        <span class="px-4 text-lime-300">🚫 DESPUÉS DE LAS 22:00 HRS NO VENGA 🚫</span>
-        <span class="px-4">🍺 CERVEZA, VINO Y PISCO POR LA CASA 🍷</span>
+    <!-- TOP VINTAGE LED MATRIX DISPLAY TICKER -->
+    <div class="overflow-hidden led-display-board py-2 rounded-xl mb-4 border-2 border-stone-800">
+      <div class="marquee-track led-ticker-text text-xs sm:text-sm tracking-widest uppercase">
+        <span class="px-5">●● GALA OFICIAL: MIS DESEADOS 35 AÑOS ●●</span>
+        <span class="px-5 text-amber-400" style="text-shadow: 0 0 8px #ffaa00;">★ VIERNES 27 DE NOVIEMBRE ★</span>
+        <span class="px-5 text-red-500">▲ DESPUÉS DE LAS 22:00 HRS NO SE ABRE LA REJA ▲</span>
+        <span class="px-5 text-amber-300" style="text-shadow: 0 0 8px #ffaa00;">● CERVEZA, VINO Y PISCO POR LA CASA ●</span>
+        <span class="px-5">●● GALA OFICIAL: MIS DESEADOS 35 AÑOS ●●</span>
+        <span class="px-5 text-amber-400" style="text-shadow: 0 0 8px #ffaa00;">★ VIERNES 27 DE NOVIEMBRE ★</span>
+        <span class="px-5 text-red-500">▲ DESPUÉS DE LAS 22:00 HRS NO SE ABRE LA REJA ▲</span>
+        <span class="px-5 text-amber-300" style="text-shadow: 0 0 8px #ffaa00;">● CERVEZA, VINO Y PISCO POR LA CASA ●</span>
       </div>
     </div>
 
@@ -546,9 +575,7 @@
             <div class="text-xs sm:text-sm font-black text-amber-300 uppercase tracking-wider">Pisco</div>
           </div>
         </div>
-        <p class="text-xs sm:text-sm text-stone-200 bg-black/60 border border-white/15 rounded-xl p-2.5">
-          ✨ <strong>Nota de la Gerencia:</strong> La casa financia exclusivamente <strong>cerveza, vino y pisco</strong>. Si su preferencia es otra, puede traerla con total libertad.
-        </p>
+        
       </div>
 
       <!-- ACTO III: POLÍTICA DE REGALOS Y CESANTÍA -->
@@ -576,7 +603,7 @@
             <button id="giftBtnUnemployed" type="button" class="bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-600 font-bold text-xs py-2.5 px-3 rounded-lg transition flex items-center justify-center">Estoy sin trabajo (Exento)</button>
           </div>
           <p id="giftStatusFeedback" class="text-xs text-lime-300 font-semibold mt-2.5 text-center">
-            ✅ Excelente: Tu regalo asegura el cariño de la anfitriona por un año más.
+            ✅ Excelente: Tu regalo asegura el cariño de la anfitriona.
           </p>
         </div>
       </div>
@@ -629,9 +656,7 @@
 
       <!-- UNLOCKED STATE (ADDRESS + MAPS + WAZE + WHATSAPP) -->
       <div id="locationUnlockedBox" class="hidden bg-gradient-to-br from-emerald-950/90 via-black to-purple-950/90 border-2 border-lime-400 rounded-2xl p-4 text-center animate-fadeIn">
-        <div class="inline-block bg-lime-400 text-black font-black text-[10px] uppercase px-2.5 py-0.5 rounded-full mb-2">
-          🔓 Coordenadas Desbloqueadas
-        </div>
+        
         <h3 class="font-royal text-xl font-black text-amber-300">
           Nueva Antumalal 146, Maipú
         </h3>
@@ -659,13 +684,19 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          
           <button
             id="rsvpWhatsappBtn"
             type="button"
             class="bg-lime-500 hover:bg-lime-400 text-black font-black text-xs py-2.5 px-3 rounded-xl transition flex items-center justify-center gap-1.5 shadow"
           >
             <span>💬</span> Confirmar por WhatsApp
+          </button>
+          <button
+            id="addToCalendarBtn"
+            type="button"
+            class="bg-amber-400 hover:bg-amber-300 text-black font-black text-xs py-2.5 px-3 rounded-xl transition flex items-center justify-center gap-1.5 shadow"
+          >
+            <span>📅</span> Agregar a mi Agenda
           </button>
         </div>
       </div>
@@ -686,15 +717,7 @@
       </button>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="text-center text-xs text-stone-400 pb-6">
-      <p class="font-royal text-amber-300/90 font-bold">
-        MIS DESEADOS 35 AÑOS • VIERNES 27 DE NOVIEMBRE
-      </p>
-      <p class="mt-1 text-[11px]">
-        Nueva Antumalal 146, Maipú • 20:00 a 03:30 hrs
-      </p>
-    </footer>
+    
   </main>
 
   <!-- ===================================================================== -->
@@ -1086,6 +1109,10 @@
 
     // 15 Frases de Fiesta Chilenas con Emojis
     const laughPhrases = [
+      '¡VIVAN LOS MIGAJEROS! 🥖😂',
+      '¡MIGAJAS PARA LAS PALOMAS! 🕊️💅',
+      '¡EL PUDOR ME CONOCE, PERO NO SOMOS AMIGAS! 😈✨',
+      '¡VERGÜENZA AJENA SÍ, PROPIA NO! 🙈🔥',
       '¡SALUD POR LOS 35 DE BÁRBARA! 🥂✨',
       '¡PISCOLA DE 40° CON BASTANTE HIELO! 🥃🧊',
       '¡HOY SE BAILA HASTA LAS 03:30 AM! 💃🎉',
@@ -1139,17 +1166,15 @@
     function spawnFloatingPartyBubble(phrase) {
       if (!photoStage) return;
       const bubble = document.createElement('div');
-      bubble.className = 'party-floating-text bg-gradient-to-r from-yellow-300 via-amber-400 to-yellow-500 text-black border-2 border-black px-3.5 py-1.5 rounded-full text-xs font-black shadow-[0_4px_25px_rgba(0,0,0,0.9)]';
+      bubble.className = 'party-floating-text bg-gradient-to-r from-yellow-300 via-amber-400 to-yellow-500 text-black border-2 border-black px-3.5 py-1.5 rounded-2xl text-[11px] sm:text-xs font-black shadow-[0_4px_25px_rgba(0,0,0,0.9)]';
       bubble.textContent = phrase;
       
-      // Posición aleatoria sobre la foto (X entre 12% y 72%, Y entre 20% y 65%)
-      const randX = Math.floor(Math.random() * 60) + 12;
-      const randY = Math.floor(Math.random() * 45) + 20;
-      const randRot = Math.floor(Math.random() * 22) - 11;
+      const randY = Math.floor(Math.random() * 35) + 25;
+      const randRot = Math.floor(Math.random() * 16) - 8;
       
-      bubble.style.left = randX + '%';
+      bubble.style.left = '50%';
       bubble.style.top = randY + '%';
-      bubble.style.transform = `translate(-50%, 0) rotate(${randRot}deg)`;
+      bubble.style.transform = 'translate(-50%, 0) rotate(' + randRot + 'deg)';
       
       photoStage.appendChild(bubble);
       setTimeout(() => {
@@ -1265,7 +1290,7 @@
       if (status === 'employed') {
         giftBtnEmployed.className = 'bg-amber-400 text-black font-black text-xs py-2.5 px-3 rounded-lg shadow-lg border-2 border-amber-200 transition flex items-center justify-center gap-1.5 ring-2 ring-amber-300';
         giftBtnUnemployed.className = 'bg-stone-900 text-stone-400 border border-stone-700 font-bold text-xs py-2.5 px-3 rounded-lg hover:bg-stone-800 transition flex items-center justify-center gap-1.5';
-        giftStatusFeedback.textContent = '👑 ¡Excelente decisión! Tu regalo asegura el cariño de la anfitriona y pase preferencial a la barra.';
+        giftStatusFeedback.textContent = '👑 ¡Excelente decisión! Tu regalo asegura el cariño de la anfitriona.';
         giftStatusFeedback.className = 'text-xs text-lime-300 font-bold mt-2.5 text-center bg-black/60 p-2.5 rounded-lg border border-lime-400/30';
         showToast('🎁 ¡Regalo confirmado! Bárbara te recibirá con un brindis.');
       } else {
@@ -1487,14 +1512,18 @@
         resultDesc.textContent = '¡Puntaje perfecto indiscutible! Te sabes su fecha, signo, historia y gustos al revés y al derecho. Tienes tu pase oficial al premio sorpresa.';
         // Si ganó el cupón, se oculta el botón de jugar de nuevo
         if (restartTriviaBtn) {
-          restartTriviaBtn.classList.add('hidden');
-        }
+      restartTriviaBtn.addEventListener('click', () => {
+        openTriviaFlow();
+      });
+    }
       } else {
         couponContainer.classList.add('hidden');
         ironicMessageBox.classList.remove('hidden');
         if (restartTriviaBtn) {
-          restartTriviaBtn.classList.add('hidden'); // Solo un intento permitido para todos
-        }
+      restartTriviaBtn.addEventListener('click', () => {
+        openTriviaFlow();
+      });
+    }
 
         if (score === 3) {
           resultEmoji.textContent = '🤦‍♀️👀';
@@ -1525,18 +1554,6 @@
     }
 
     function openTriviaFlow() {
-      // Si ya jugó, mostrar su resultado guardado
-      if (localStorage.getItem('barbaraTriviaPlayed') === 'true') {
-        const saved = parseInt(localStorage.getItem('barbaraTriviaScore') || '0', 10);
-        score = saved;
-        triviaModal.classList.remove('hidden');
-        triviaQuestionBox.classList.add('hidden');
-        triviaResultBox.classList.remove('hidden');
-        showTriviaFinalResults();
-        showToast('ℹ️ Ya registraste tu único intento en la trivia oficial.');
-        return;
-      }
-
       currentQ = 0;
       score = 0;
       triviaResultBox.classList.add('hidden');
@@ -1572,10 +1589,16 @@
 
     openTriviaBtn.addEventListener('click', openTriviaFlow);
     if (restartTriviaBtn) {
-      restartTriviaBtn.addEventListener('click', openTriviaFlow);
+      restartTriviaBtn.addEventListener('click', () => {
+        openTriviaFlow();
+      });
     }
     closeTriviaBtn.addEventListener('click', () => {
       triviaModal.classList.add('hidden');
+      currentQ = 0;
+      score = 0;
+      triviaResultBox.classList.add('hidden');
+      triviaQuestionBox.classList.remove('hidden');
     });
 
     shareTriviaResultBtn.addEventListener('click', () => {
