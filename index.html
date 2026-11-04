@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@400;600;800;900&family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Rubik+Glitch&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700;900&family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,600;0,800;1,400;1,600&family=Rubik+Glitch&family=Permanent+Marker&display=swap" rel="stylesheet">
   <style>
     :root {
       --neon-green: #39ff14;
@@ -32,8 +32,20 @@
       padding: 0;
     }
 
-    .font-royal {
+        .font-royal {
       font-family: 'Cinzel', serif;
+    }
+
+    .font-royal-deco {
+      font-family: 'Cinzel Decorative', serif;
+    }
+
+    .font-script {
+      font-family: 'Pinyon Script', cursive;
+    }
+
+    .font-sans-detail {
+      font-family: 'Montserrat', sans-serif;
     }
 
     .font-serif-luxury {
@@ -67,14 +79,53 @@
       pointer-events: none;
     }
 
-    /* Wax Seal Pulse */
-    @keyframes pulseSeal {
-      0%, 100% { transform: scale(1) rotate(0deg); box-shadow: 0 0 25px rgba(180, 20, 20, 0.7), inset 0 0 15px rgba(255, 215, 0, 0.4); }
-      50% { transform: scale(1.08) rotate(3deg); box-shadow: 0 0 40px rgba(255, 215, 0, 0.9), inset 0 0 20px rgba(255, 255, 255, 0.5); }
+    /* 3D Luxury Wax Seal */
+    .wax-seal {
+      position: relative;
+      width: 144px;
+      height: 144px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #991b1b 0%, #7f1d1d 55%, #450a0a 100%);
+      box-shadow:
+        0 14px 30px rgba(0, 0, 0, 0.65),
+        0 4px 10px rgba(127, 29, 29, 0.6),
+        inset 0 3px 6px rgba(255, 255, 255, 0.4),
+        inset 0 -5px 10px rgba(0, 0, 0, 0.75);
+      border: 3px solid #b91c1c;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      animation: pulseWaxSeal 2.6s infinite ease-in-out;
     }
 
-    .wax-seal {
-      animation: pulseSeal 2.2s infinite ease-in-out;
+    .wax-seal:hover {
+      transform: scale(1.06);
+    }
+
+    .wax-seal-inner {
+      width: 116px;
+      height: 116px;
+      border-radius: 50%;
+      border: 2px dashed rgba(255, 215, 0, 0.8);
+      box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.7), 0 1px 3px rgba(255, 255, 255, 0.25);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 40% 40%, rgba(185, 28, 28, 0.85), rgba(69, 10, 10, 0.98));
+    }
+
+    @keyframes pulseWaxSeal {
+      0%, 100% {
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.65), 0 0 18px rgba(185, 28, 28, 0.5);
+      }
+      50% {
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75), 0 0 32px rgba(255, 215, 0, 0.85);
+      }
     }
 
     /* Maximalist Background & Neon Glows */
@@ -189,47 +240,106 @@
     </div>
   </div>
 
+    <!-- ===================================================================== -->
+  <!-- FASE 1: PERGAMINO SOLEMNE DE ÓPERA REAL (ALTA GALA EDITORIAL)         -->
   <!-- ===================================================================== -->
-  <!-- FASE 1: PERGAMINO SOLEMNE DE ÓPERA REAL (SE RASGA AL TOCAR)            -->
-  <!-- ===================================================================== -->
-  <div id="operaOverlay" class="fixed inset-0 z-40 flex items-center justify-center overflow-hidden p-3 sm:p-6">
+  <div id="operaOverlay" class="fixed inset-0 z-40 flex items-center justify-center overflow-hidden p-3 sm:p-6 bg-black/60 backdrop-blur-sm">
     <!-- Left Parchment Half -->
-    <div id="parchmentLeft" class="parchment-half absolute inset-y-0 left-0 w-1/2 border-r border-amber-700/30 shadow-2xl"></div>
+    <div id="parchmentLeft" class="parchment-half absolute inset-y-0 left-0 w-1/2 border-r border-amber-700/40 shadow-2xl"></div>
     <!-- Right Parchment Half -->
-    <div id="parchmentRight" class="parchment-half absolute inset-y-0 right-0 w-1/2 border-l border-amber-700/30 shadow-2xl"></div>
+    <div id="parchmentRight" class="parchment-half absolute inset-y-0 right-0 w-1/2 border-l border-amber-700/40 shadow-2xl"></div>
 
-    <!-- Center Solemn Card Content -->
-    <div id="operaCardContent" class="relative z-10 max-w-md w-full border-4 border-double border-amber-800/80 bg-[#fbf5e6]/95 p-6 sm:p-8 rounded-sm shadow-[0_0_60px_rgba(0,0,0,0.85)] text-center text-stone-900 transition-all duration-500">
-      <div class="text-xs tracking-[0.3em] uppercase text-amber-900 font-bold mb-2">
-        ✦ Real Sociedad Filarmónica de Maipú ✦
+    <!-- Center Solemn Card Content (Luxury Ivory Paper with Gold Filigree) -->
+    <div id="operaCardContent" class="relative z-10 max-w-lg w-full bg-[#fdfbf7] p-6 sm:p-8 rounded-lg shadow-[0_15px_60px_rgba(0,0,0,0.85)] text-center text-stone-900 border-2 border-amber-700/50 transition-all duration-500">
+      
+      <!-- Inner Thin Gold Frame with Ornate Corners -->
+      <div class="relative border border-amber-800/40 p-5 sm:p-6 rounded">
+        <!-- Corner Ornaments (SVG) -->
+        <svg class="absolute top-1.5 left-1.5 w-5 h-5 text-amber-700/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M3 9V3h6M3 3l7 7"/>
+        </svg>
+        <svg class="absolute top-1.5 right-1.5 w-5 h-5 text-amber-700/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M21 9V3h-6M21 3l-7 7"/>
+        </svg>
+        <svg class="absolute bottom-1.5 left-1.5 w-5 h-5 text-amber-700/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M3 15v6h6M3 21l7-7"/>
+        </svg>
+        <svg class="absolute bottom-1.5 right-1.5 w-5 h-5 text-amber-700/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M21 15v6h-6M21 21l-7-7"/>
+        </svg>
+
+        <!-- Royal Emblem / Imperial Crown Vector (SVG) -->
+        <div class="flex justify-center mb-2">
+          <svg class="w-12 h-12 text-amber-700 drop-shadow-sm" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2">
+            <!-- Crown Base -->
+            <path d="M12 44h40l-4 8H16l-4-8z" fill="rgba(180,83,9,0.15)" stroke="currentColor"/>
+            <!-- Crown Peaks -->
+            <path d="M12 44L18 24l14 12 14-12 6 20H12z" fill="rgba(245,158,11,0.2)" stroke="currentColor" stroke-linejoin="round"/>
+            <!-- Crown Jewels / Spheres -->
+            <circle cx="18" cy="22" r="3" fill="#b45309"/>
+            <circle cx="32" cy="34" r="3.5" fill="#d97706"/>
+            <circle cx="46" cy="22" r="3" fill="#b45309"/>
+            <!-- Top Cross -->
+            <path d="M32 16v6M29 19h6" stroke="#92400e" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <!-- Aristocratic Subtitle -->
+        <div class="font-sans-detail text-[10px] sm:text-[11px] tracking-[0.3em] uppercase text-amber-900 font-bold mb-1.5">
+          Real Sociedad Filarmónica de Maipú
+        </div>
+
+        <!-- Main Title: Formal Gala -->
+        <h1 class="font-royal text-2xl sm:text-3xl font-black text-amber-950 tracking-wider leading-tight mb-0.5">
+          GALA LÍRICA DE ALTA ALCURNIA
+        </h1>
+
+        <!-- Calligraphy Honor Line -->
+        <div class="font-script text-3xl sm:text-4xl text-amber-800 my-1 font-normal tracking-wide">
+          Los Deseados 35 Años de Bárbara
+        </div>
+
+        <!-- Elegant Filigree Divider SVG -->
+        <div class="flex items-center justify-center my-3 text-amber-700/60">
+          <span class="h-[1px] w-16 bg-gradient-to-r from-transparent to-amber-700/60"></span>
+          <span class="mx-3 text-xs tracking-widest">❖ ⚜ ❖</span>
+          <span class="h-[1px] w-16 bg-gradient-to-l from-transparent to-amber-700/60"></span>
+        </div>
+
+        <!-- Solemn Decree Text -->
+        <p class="font-serif-luxury italic text-xs sm:text-sm text-stone-800 leading-relaxed mb-4 max-w-sm mx-auto">
+          «Por Decreto Real, se convoca a Su Excelencia a la solemne conmemoración y posterior celebración magna de sus tres décadas y media de vida.»
+        </p>
+
+        <!-- Formal Date & Venue Strip -->
+        <div class="bg-amber-900/5 border-y border-amber-800/25 py-2.5 px-4 mb-5 text-center font-sans-detail">
+          <div class="text-xs sm:text-sm font-bold text-amber-950 tracking-wider uppercase">
+            Viernes 27 de Noviembre • 20:00 Horas
+          </div>
+          <div class="text-[11px] text-stone-600 tracking-wide mt-0.5">
+            Nueva Antumalal 146, Maipú • Etiqueta: Dignidad Intacta
+          </div>
+        </div>
+
+        <!-- 3D Luxury Wax Seal Button -->
+        <button id="tearSealBtn" type="button" class="wax-seal mx-auto focus:outline-none" aria-label="Abrir protocolo de invitación">
+          <div class="wax-seal-inner">
+            <svg class="w-7 h-7 text-amber-300 drop-shadow mb-1" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+            </svg>
+            <span class="font-royal text-[10px] sm:text-[11px] font-black tracking-widest uppercase text-amber-200 leading-tight">
+              ABRIR GALA
+            </span>
+            <span class="font-sans-detail text-[8px] uppercase tracking-wider text-amber-300/80 mt-0.5 font-medium">
+              (Toca el Sello)
+            </span>
+          </div>
+        </button>
+
+        <p class="font-sans-detail text-[10px] tracking-[0.2em] uppercase text-stone-500 mt-3 font-semibold">
+          Toca el sello de lacre para desatar la celebración
+        </p>
       </div>
-      <div class="text-3xl mb-2">🎻 👑 🥂</div>
-      <h1 class="font-royal text-2xl sm:text-3xl font-black text-amber-950 tracking-wide leading-tight mb-3">
-        GALA LÍRICA DE ALTA ALCURNIA
-      </h1>
-      <div class="w-24 h-0.5 bg-amber-800/60 mx-auto mb-4"></div>
-      <p class="font-serif-luxury italic text-base sm:text-lg text-stone-800 leading-relaxed mb-4">
-        «Por Decreto Real, se convoca a Su Excelencia a presenciar la obra maestra más esperada de las últimas tres décadas y media...»
-      </p>
-      <div class="bg-amber-900/10 border border-amber-800/30 rounded p-3 mb-6 text-xs sm:text-sm font-serif-luxury text-amber-950">
-        <strong>Viernes 27 de Noviembre</strong> • Vestimenta: Dignidad Intacta<br/>
-        <span class="italic text-stone-600">(Advertencia: La solemnidad dura exactamente hasta que toques el sello)</span>
-      </div>
-
-      <!-- Wax Seal Button to Tear the Invitation -->
-      <button id="tearSealBtn" type="button" class="wax-seal mx-auto flex flex-col items-center justify-center w-36 h-36 rounded-full bg-gradient-to-br from-red-700 via-red-800 to-red-950 text-amber-200 border-4 border-amber-400 cursor-pointer select-none focus:outline-none">
-        <span class="text-2xl mb-0.5">⚡👑⚡</span>
-        <span class="font-royal font-black text-xs tracking-widest uppercase leading-tight px-2">
-          RASGAR PROTOCOLO
-        </span>
-        <span class="text-[10px] text-amber-300/90 mt-1 font-semibold">
-          (Toca para abrir)
-        </span>
-      </button>
-
-      <p class="text-[11px] uppercase tracking-widest text-stone-500 mt-4 font-semibold">
-        Activar audio y desatar el caos de los 35
-      </p>
     </div>
   </div>
 
