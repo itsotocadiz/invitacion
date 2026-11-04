@@ -224,15 +224,7 @@
 </head>
 <body class="maximalist-bg min-h-screen relative">
 
-  <!-- TOP FLOATING CONTROLS (Audio & Replay Opera Intro) -->
-  <div class="fixed top-3 right-3 z-50 flex items-center gap-2">
-    <button id="replayIntroBtn" type="button" class="hidden bg-black/80 hover:bg-black text-amber-300 border border-amber-400/60 px-3 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase shadow-lg backdrop-blur-md transition flex items-center gap-1.5">
-      <span>🎭</span> Ver Intro Ópera
-    </button>
-    <button id="audioToggleBtn" type="button" class="bg-black/80 hover:bg-black text-lime-400 border border-lime-400/60 px-3 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase shadow-lg backdrop-blur-md transition flex items-center gap-1.5" aria-label="Alternar sonido">
-      <span id="audioIcon">🔊</span> <span id="audioLabel">Sonido ON</span>
-    </button>
-  </div>
+  
 
   <!-- TOAST NOTIFICATION -->
   <div id="toastBox" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-all duration-300 transform translate-y-4">
@@ -426,33 +418,40 @@
             <span>🍺</span> ¡Chocar el Vaso! (<span id="toastCount">0</span>)
           </button>
 
-          <!-- REALISTIC DRINK GLASS (VASO DE FIESTA) OVER PHOTO -->
-          <div class="absolute bottom-4 right-3 bg-black/85 border-2 border-amber-300/80 rounded-2xl p-2.5 w-24 text-center shadow-2xl backdrop-blur-md">
-            <div class="text-[9px] font-black uppercase text-amber-300 tracking-wider mb-1.5 flex items-center justify-center gap-1">
-              <span>🥃</span> <span>Vaso</span>
+          <!-- REALISTIC PISCOLA GLASS (CON MUCHO HIELO) OVER PHOTO -->
+          <div class="absolute bottom-4 right-3 bg-black/90 border-2 border-amber-400/90 rounded-2xl p-2.5 w-28 text-center shadow-[0_0_25px_rgba(0,0,0,0.9)] backdrop-blur-md select-none">
+            <div class="text-[9px] font-black uppercase text-amber-300 tracking-wider mb-1 flex items-center justify-center gap-1">
+              <span>🧊</span> <span>Piscola 35°</span>
             </div>
-            <div class="relative w-12 h-20 mx-auto border-2 border-stone-400/90 rounded-b-xl rounded-t-sm bg-stone-950/80 overflow-hidden flex flex-col justify-end shadow-inner">
-              <div id="beerMeterFill" class="w-full bg-gradient-to-t from-amber-950 via-amber-700 to-amber-500 transition-all duration-300" style="height: 15%;"></div>
-              <div class="absolute top-1 inset-x-0 text-[10px] text-center opacity-80 pointer-events-none">🧊</div>
-            </div>
-            <div id="beerMeterText" class="text-[10px] font-extrabold text-lime-300 mt-1.5">
-              15% Servido
-            </div>
-          </div>
-            <div id="beerMeterText" class="text-[11px] font-extrabold text-lime-300 mt-1">
-              35% Caos
-            </div>
-          </div>
+            
+            <!-- Vaso de vidrio con hielos visibles -->
+            <div class="relative w-14 h-24 mx-auto border-2 border-white/40 rounded-b-xl rounded-t-sm bg-gradient-to-b from-white/10 to-transparent overflow-hidden flex flex-col justify-end shadow-inner">
+              <!-- Hielos flotando arriba -->
+              <div class="absolute top-2 inset-x-0 flex justify-center gap-0.5 z-20 pointer-events-none opacity-90 text-[11px]">
+                <span class="transform -rotate-12 drop-shadow">🧊</span>
+                <span class="transform rotate-12 drop-shadow">🧊</span>
+              </div>
+              <div class="absolute top-8 left-2 z-20 pointer-events-none opacity-85 text-[10px]">
+                <span class="transform rotate-45 drop-shadow">🧊</span>
+              </div>
+              <div class="absolute top-10 right-2 z-20 pointer-events-none opacity-85 text-[10px]">
+                <span class="transform -rotate-45 drop-shadow">🧊</span>
+              </div>
 
-          <!-- BOTTOM CAPTION BAR INSIDE PHOTO -->
-          <div class="absolute bottom-0 inset-x-0 bg-gradient-to-r from-black via-purple-950/95 to-black p-2.5 border-t border-amber-400/50 flex items-center justify-between text-xs">
-            <span class="text-amber-200 font-serif-luxury italic">👑 Bárbara 35 Años</span>
-            <span class="text-lime-400 font-bold text-[11px] shrink-0 ml-2">
-              Toca la foto ✨
-            </span>
+              <!-- Líquido Oscuro de Piscola (Coca Cola + Pisco) -->
+              <div id="beerMeterFill" class="w-full bg-gradient-to-t from-[#100401] via-[#240a02] to-[#451404] transition-all duration-300 relative border-t border-amber-400/40" style="height: 20%;">
+                <!-- Reflejo ámbar -->
+                <div class="absolute inset-x-0 top-0 h-1 bg-amber-400/50"></div>
+              </div>
+            </div>
+
+            <div id="beerMeterText" class="text-[10px] font-extrabold text-lime-300 mt-1.5 leading-tight">
+              20% Servida
+            </div>
+            <div class="text-[8px] text-stone-400 uppercase tracking-tighter mt-0.5">
+              (Toca para servir)
+            </div>
           </div>
-        </div>
-      </div>
     </section>
 
     <!-- LIVE COUNTDOWN TO FRIDAY NOV 27, 20:00 HRS -->
@@ -522,19 +521,26 @@
         <h3 class="font-royal text-base sm:text-lg font-bold text-white mb-2">
           Tragos por Cuenta de la Casa
         </h3>
-        <div class="grid grid-cols-3 gap-2 mb-3 text-center">
-          <div class="bg-black/70 border border-lime-400/50 rounded-xl p-2">
-            <div class="text-xl">🍺</div>
-            <div class="text-xs font-extrabold text-lime-300 mt-0.5">Cerveza</div>
+        <div class="grid grid-cols-3 gap-2 mb-3 text-center font-sans-detail">
+          <div class="bg-black/70 border border-lime-400/50 rounded-xl p-2.5 flex flex-col items-center">
+            <svg class="w-6 h-6 text-lime-400 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 11h1a3 3 0 0 1 0 6h-1M9 2v3M12 2v3M15 2v3M6 8h11v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8z"/>
+            </svg>
+            <div class="text-xs font-extrabold text-lime-300">Cerveza</div>
           </div>
-          <div class="bg-black/70 border border-fuchsia-400/50 rounded-xl p-2">
-            <div class="text-xl">🍷</div>
-            <div class="text-xs font-extrabold text-fuchsia-300 mt-0.5">Vino</div>
+          <div class="bg-black/70 border border-fuchsia-400/50 rounded-xl p-2.5 flex flex-col items-center">
+            <svg class="w-6 h-6 text-fuchsia-400 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M8 22h8M12 15v7M17 3H7c0 4 2 8 5 8s5-4 5-8z"/>
+            </svg>
+            <div class="text-xs font-extrabold text-fuchsia-300">Vino</div>
           </div>
-          <div class="bg-black/70 border border-amber-400/50 rounded-xl p-2">
-            <div class="text-xl">🥃</div>
-            <div class="text-xs font-extrabold text-amber-300 mt-0.5">Pisco</div>
+          <div class="bg-black/70 border border-amber-400/50 rounded-xl p-2.5 flex flex-col items-center">
+            <svg class="w-6 h-6 text-amber-400 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 3h12l-2 18H8L6 3zM6 8h12M10 12l2-2 2 2"/>
+            </svg>
+            <div class="text-xs font-extrabold text-amber-300">Pisco</div>
           </div>
+        </div>
         </div>
         <p class="text-xs sm:text-sm text-stone-200 bg-black/60 border border-white/15 rounded-xl p-2.5">
           ✨ <strong>Nota de la Gerencia:</strong> La casa financia exclusivamente <strong>cerveza, vino y pisco</strong>. Si su preferencia es otra, puede traerla con total libertad.
@@ -713,20 +719,31 @@
         </p>
       </div>
 
-      <!-- Animated Piscola Glass Progress in Modal -->
+      <!-- Animated Piscola Glass Progress in Modal (CON MUCHO HIELO) -->
       <div class="bg-black/85 border border-amber-400/50 rounded-2xl p-3 mb-4 flex items-center gap-3">
-        <!-- Vaso de Piscola -->
-        <div class="relative w-12 h-16 border-2 border-amber-300/80 rounded-b-xl rounded-t-sm overflow-hidden bg-stone-950 shrink-0 flex flex-col justify-end shadow-inner">
-          <div id="modalBeerLiquid" class="w-full bg-gradient-to-t from-[#150702] via-[#2c1004] to-[#4a1c06] transition-all duration-500" style="height: 0%;"></div>
-          <div class="absolute top-1 inset-x-0 text-[10px] text-center opacity-80 pointer-events-none">🧊</div>
+        <!-- Vaso de Piscola con Hielos -->
+        <div class="relative w-12 h-20 border-2 border-white/50 rounded-b-xl rounded-t-sm overflow-hidden bg-stone-950 shrink-0 flex flex-col justify-end shadow-inner">
+          <!-- Hielos flotantes en la piscola -->
+          <div class="absolute top-1 inset-x-0 flex justify-center gap-0.5 z-20 pointer-events-none text-xs">
+            <span class="transform -rotate-12">🧊</span>
+            <span class="transform rotate-12">🧊</span>
+          </div>
+          <div class="absolute top-6 left-1 z-20 pointer-events-none text-[10px]">
+            <span>🧊</span>
+          </div>
+          <div class="absolute top-7 right-1 z-20 pointer-events-none text-[10px]">
+            <span>🧊</span>
+          </div>
+          <!-- Líquido Piscola -->
+          <div id="modalBeerLiquid" class="w-full bg-gradient-to-t from-[#0d0301] via-[#200802] to-[#3d1104] transition-all duration-500 border-t border-amber-400/60" style="height: 0%;"></div>
         </div>
         <div class="flex-1">
           <div class="flex justify-between text-xs font-bold mb-1">
             <span class="text-amber-300" id="triviaProgressLabel">Pregunta 1 de 4</span>
             <span class="text-amber-200" id="triviaScoreLabel">Vaso de Piscola</span>
           </div>
-          <div class="w-full h-2.5 bg-stone-800 rounded-full overflow-hidden">
-            <div id="triviaProgressBar" class="h-full bg-gradient-to-r from-amber-600 to-yellow-400 transition-all duration-300" style="width: 25%;"></div>
+          <div class="w-full h-2.5 bg-stone-800 rounded-full overflow-hidden border border-amber-500/30">
+            <div id="triviaProgressBar" class="h-full bg-gradient-to-r from-amber-600 via-amber-400 to-yellow-300 transition-all duration-300" style="width: 25%;"></div>
           </div>
         </div>
       </div>
@@ -763,6 +780,11 @@
             <span class="text-base">🎟️</span> Descargar Cupón Premio Sorpresa
           </button>
         </div>
+
+                <!-- Botón Especial de Disculpa para Repetir Trivia (Solo si < 4/4) -->
+        <button id="retryTriviaApologyBtn" type="button" class="hidden w-full mt-3 bg-gradient-to-r from-purple-800 via-fuchsia-700 to-pink-700 hover:from-purple-700 hover:to-pink-600 text-white font-black text-xs sm:text-sm uppercase tracking-wider py-3.5 px-4 rounded-xl shadow-lg border border-fuchsia-300 transition transform active:scale-95 flex items-center justify-center gap-2">
+          <span>🥺🙏</span> ¡Lo siento amigaaa, lo quiero volver a intentar!
+        </button>
 
         <!-- Mensaje Irónico por Falta de Conocimiento (Menos de 4/4) -->
         <div id="ironicMessageBox" class="hidden mb-4 p-4 rounded-2xl bg-red-950/70 border-2 border-red-500/80 text-left text-xs sm:text-sm text-stone-200 shadow-[0_0_20px_rgba(239,68,68,0.4)]">
@@ -1024,55 +1046,52 @@
     const laughBadge = document.getElementById('laughBadge');
     const photoStage = document.getElementById('photoStage');
 
-    let drinkLevel = 15;
+        let drinkLevel = 20;
     let toastCounter = 0;
     let hasAlertedEbriety = false;
 
-    const laughPhrases = [
-      '¡SALUD POR LOS 35! 🥂',
-      '¡HOY SE TOMA HASTA LAS 03:30! 💃',
-      '¡PISCOLA, CERVEZA Y VINO! 🍻',
-      '¡A LAS 22:01 NO SE ABRE LA REJA! 🚪',
-      '¡DEPECHE MODE A TODO VOLUMEN! 🌹',
-      '¡QUE EL LUNES NO ME ESPEREN! 🍾',
-      '¡UN BRINDIS POR LA REINA BÁRBARA! 👑',
-      '¡EL HIELO NO SE LE NIEGA A NADIE! 🧊',
-      '¡EL MEJOR CARRETE DEL AÑO! 🎉',
-      '¡LA DIGNIDAD SE QUEDA EN LA ENTRADA! ✨'
-    ];
-
     function updateDrinkMeter(pct) {
-      if (!beerMeterFill || !beerMeterText) return;
-      beerMeterFill.style.height = pct + '%';
+      const fill = document.getElementById('beerMeterFill');
+      const text = document.getElementById('beerMeterText');
+      if (!fill || !text) return;
+      
+      fill.style.height = pct + '%';
       if (pct >= 100) {
-        beerMeterText.textContent = '¡100% Lleno!';
-        beerMeterText.className = 'text-[10px] font-black text-red-400 animate-pulse mt-1.5';
+        text.textContent = '¡100% Cabezona!';
+        text.className = 'text-[10px] font-black text-red-400 animate-pulse mt-1.5';
+      } else if (pct >= 70) {
+        text.textContent = pct + '% Buena Piscola';
+        text.className = 'text-[10px] font-extrabold text-amber-300 mt-1.5';
       } else {
-        beerMeterText.textContent = pct + '% Servido';
-        beerMeterText.className = 'text-[10px] font-extrabold text-lime-300 mt-1.5';
+        text.textContent = pct + '% Servida';
+        text.className = 'text-[10px] font-extrabold text-lime-300 mt-1.5';
       }
     }
 
-    // Vaciar el vaso con delay (cada 2.5 segundos baja 2%)
+    // Vaciar el vaso lentamente con delay (cada 2.5s baja un 3%)
     setInterval(() => {
-      if (drinkLevel > 10) {
-        drinkLevel = Math.max(10, drinkLevel - 2);
+      if (drinkLevel > 15) {
+        drinkLevel = Math.max(15, drinkLevel - 3);
         updateDrinkMeter(drinkLevel);
-        if (drinkLevel < 90) {
+        if (drinkLevel < 85) {
           hasAlertedEbriety = false;
         }
       }
     }, 2500);
 
     function triggerPhotoToast(e) {
-      if (e) e.stopPropagation();
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
       toastCounter++;
+      const toastCountEl = document.getElementById('toastCount');
       if (toastCountEl) toastCountEl.textContent = toastCounter;
       playClinkSound();
       spawnCupBubbles(6);
 
-      // Llena el vaso con toques más lentos (+7% por toque)
-      drinkLevel = Math.min(100, drinkLevel + 7);
+      // Llena el vaso progresivamente (+6% por toque)
+      drinkLevel = Math.min(100, drinkLevel + 6);
       updateDrinkMeter(drinkLevel);
 
       if (drinkLevel >= 100 && !hasAlertedEbriety) {
@@ -1080,12 +1099,22 @@
         showToast('🚨 ¡Cuidado! Vas camino a ponerte ebrio/a antes de las 22:00 hrs 🍷😵');
       }
 
-      laughBadge.classList.remove('hidden');
-      laughBadge.textContent = laughPhrases[toastCounter % laughPhrases.length];
+      const laughBadge = document.getElementById('laughBadge');
+      if (laughBadge) {
+        laughBadge.classList.remove('hidden');
+        laughBadge.textContent = laughPhrases[toastCounter % laughPhrases.length];
+      }
     }
 
-    toastCupBtn.addEventListener('click', triggerPhotoToast);
-    photoStage.addEventListener('click', triggerPhotoToast);
+    const toastCupBtn = document.getElementById('toastCupBtn');
+    const photoStage = document.getElementById('photoStage');
+    if (toastCupBtn) {
+      toastCupBtn.addEventListener('click', triggerPhotoToast);
+      toastCupBtn.addEventListener('touchend', triggerPhotoToast);
+    }
+    if (photoStage) {
+      photoStage.addEventListener('click', triggerPhotoToast);
+    }
 
     // =========================================================================
     // WHATSAPP DIRECTO A BÁRBARA (+56975177840)
@@ -1345,6 +1374,26 @@
       renderTriviaQuestion();
       triviaModal.classList.remove('hidden');
       playClinkSound();
+    }
+
+        const retryTriviaApologyBtn = document.getElementById('retryTriviaApologyBtn');
+    if (retryTriviaApologyBtn) {
+      retryTriviaApologyBtn.addEventListener('click', () => {
+        localStorage.removeItem('barbaraTriviaPlayed');
+        localStorage.removeItem('barbaraTriviaScore');
+        currentQ = 0;
+        score = 0;
+        triviaResultBox.classList.add('hidden');
+        const cc = document.getElementById('couponContainer');
+        const imb = document.getElementById('ironicMessageBox');
+        if (cc) cc.classList.add('hidden');
+        if (imb) imb.classList.add('hidden');
+        retryTriviaApologyBtn.classList.add('hidden');
+        triviaQuestionBox.classList.remove('hidden');
+        renderTriviaQuestion();
+        showToast('💕 ¡Segunda oportunidad concedida por Bárbara! Da lo mejor de ti.');
+        playClinkSound();
+      });
     }
 
     openTriviaBtn.addEventListener('click', openTriviaFlow);
